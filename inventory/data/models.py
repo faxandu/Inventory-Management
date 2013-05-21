@@ -4,26 +4,18 @@ from django.utils import timezone
 
 # Create your models here.
 
-class Inventory(models.Model):
-	modelNum = models.CharField(max_length=200)
-	def __unicode__(self):
-		return self.modelNum
+class Equipment(models.Model):
+	model_num = models.IntegerField()
+	serial_num = models.IntegerField()
+	equip_type = models.ForeignField()
+	location = models.ForeignField()
+	description = models.TextField()
 
-class Serial(models.Model):
-	inventory = models.ForeignKey(Inventory)
-	serialNum = models.CharField(max_length=200)
 	def __unicode__(self):
-		return self.serialNum
-
-class Description(models.Model):
-	inventory = models.ForeignKey(Inventory)
-	descript = models.CharField(max_length=255)
-	def __unicode__(self):
-		return self.descript
+		return unicode(model_num)
 
 class Location(models.Model):
-	inventory = models.ForeignKey(Inventory)
-	room = models.CharField(max_length=3)
+	room = models.CharField(max_length=4)
 	building = models.CharField(max_length=2)
 	def __unicode__(self):
-		return self.building + self.room
+		return unicode(self.building + self.room)
