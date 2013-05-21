@@ -7,8 +7,8 @@ from django.utils import timezone
 class Equipment(models.Model):
 	model_num = models.IntegerField()
 	serial_num = models.IntegerField()
-	equip_type = models.ForeignField()
-	location = models.ForeignField()
+	equip_type = models.ForeignField(Equip_Type)
+	location = models.ForeignField(Location)
 	description = models.TextField()
 
 	def __unicode__(self):
@@ -19,3 +19,7 @@ class Location(models.Model):
 	building = models.CharField(max_length=2)
 	def __unicode__(self):
 		return unicode(self.building + self.room)
+
+#numer is implied
+class Equip_Type(models.Model):
+	eType = models.CharField(max_length=20, unique=True)
