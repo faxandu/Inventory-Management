@@ -8,6 +8,9 @@ from django.utils import timezone
 class Equip_Type(models.Model):
 	eType = models.CharField(max_length=20, unique=True)
 
+	def __unicode__(self):
+		return unicode(self.eType)
+
 class Location(models.Model):
 	room = models.CharField(max_length=4)
 	building = models.CharField(max_length=2)
@@ -22,4 +25,4 @@ class Equipment(models.Model):
 	description = models.TextField()
 
 	def __unicode__(self):
-		return unicode(model_num)
+		return unicode(self.description)
