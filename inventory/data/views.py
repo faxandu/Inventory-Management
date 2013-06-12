@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from data.serializers import EquipSerializer, ComputerSerializeras
+from data.serializers import EquipSerializer, ComputerSerializer
 from data.models import Equipment, Computer
 
 class UserViewSet(viewsets.ModelViewSet):
