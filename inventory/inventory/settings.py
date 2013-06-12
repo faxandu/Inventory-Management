@@ -1,7 +1,8 @@
 # Django settings for inventory project.
-import os
+#import os
 
-BASE_DIR = '~/projects/inventory/inventory'
+#BASE_DIR = '~/projects/Inventory-Management/inventory'
+'~/factulty_request/project/project'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -103,6 +104,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 
 ROOT_URLCONF = 'inventory.urls'
@@ -125,12 +127,16 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     #'inventory',
     'data',
+    'corsheaders',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'rest_framework',
 )
+
+#required as apart of cors, 3 lines total added to settings
+CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),

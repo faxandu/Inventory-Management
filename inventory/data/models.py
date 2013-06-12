@@ -26,3 +26,8 @@ class Equipment(models.Model):
 
 	def __unicode__(self):
 		return unicode(self.description)
+
+
+class Computer(Equipment):
+	ram = models.IntegerField()
+	max_ram = models.IntegerField()
