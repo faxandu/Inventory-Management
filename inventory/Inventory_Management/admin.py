@@ -1,5 +1,5 @@
 from django.contrib import admin
-from data.models import Equipment, Equip_Type, Location, Computer
+from Inventory_Management.models import Equipment, Equip_Type, Location, Computer
 
 
 class EquipAdmin(admin.ModelAdmin):

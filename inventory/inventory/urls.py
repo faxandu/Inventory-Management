@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from rest_framework import routers
-from data import views
+from Inventory_Management import views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin

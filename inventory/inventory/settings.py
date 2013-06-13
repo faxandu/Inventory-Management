@@ -125,8 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'inventory',
-    'data',
+    'Inventory_Management',
     'corsheaders',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

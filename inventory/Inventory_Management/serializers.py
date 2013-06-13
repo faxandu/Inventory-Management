@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from data.models import Equipment, Computer
+from Inventory_Management.models import Equipment, Computer
 
 class EquipSerializer(serializers.ModelSerializer):
     class Meta:
