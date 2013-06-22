@@ -23,6 +23,7 @@ class Equipment(models.Model):
 	equip_type = models.ForeignKey(Equip_Type)
 	location = models.ForeignKey(Location)
 	description = models.TextField()
+	now = models.DateTimeField(auto_now_add=True)
 
 	def __unicode__(self):
 		return unicode(self.description)

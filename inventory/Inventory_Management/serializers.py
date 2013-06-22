@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User, Group
+#from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from Inventory_Management.models import Equipment, Computer
 
 class EquipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipment
-        fields = ('description', 'model_num', 'serial_num', 'equip_type', 'location',)
+        fields = ('description', 'model_num', 'serial_num', 'equip_type', 'location', 'now',)
 
 class ComputerSerializer(serializers.ModelSerializer):
     class Meta:
