@@ -39,10 +39,6 @@ class VComponent(viewsets.ModelViewSet):
     serializer_class = serializers.SComponent
 
 #the componet types, there are 7 of these
-class VMemory(viewsets.ModelViewSet):
-    queryset=models.Memory.objects.all()
-    serializer_class = serializers.SMemory
-
 class VHardDrive(viewsets.ModelViewSet):
     queryset=models.HardDrive.objects.all()
     serializer_class = serializers.SHardDrive
@@ -66,6 +62,19 @@ class VOperating_system(viewsets.ModelViewSet):
 class VPower_supply_unit(viewsets.ModelViewSet):
     queryset=models.Power_supply_unit.objects.all()
     serializer_class = serializers.SPower_supply_unit
+
+class VMemory(viewsets.ModelViewSet):
+    queryset=models.Memory.objects.all()
+    serializer_class = serializers.SMemory
+
+#these are derived from Memory
+class VRam(viewsets.ModelViewSet):
+    queryset=models.Ram.objects.all()
+    serializer_class = serializers.SRam
+
+class VFlash_Memory(viewsets.ModelViewSet):
+    queryset=models.Flash_Memory.objects.all()
+    serializer_class = serializers.SFlash_Memory
 
 #these are of type unit
 class VRouter(viewsets.ModelViewSet):

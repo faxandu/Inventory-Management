@@ -55,10 +55,6 @@ class SComponent(serializers.ModelSerializer):
         fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location')
 
 #the following is objects from type componet, there are 7 of these classes
-class SMemory(serializers.ModelSerializer):
-    class Meta:
-        model = models.Memory
-        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'mem_type', 'size_in_megs', 'type_of_ram')
 
 class SHardDrive(serializers.ModelSerializer):
     class Meta:
@@ -89,6 +85,22 @@ class SPower_supply_unit(serializers.ModelSerializer):
     class Meta:
         model = models.Power_supply_unit
         fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location')
+
+class SMemory(serializers.ModelSerializer):
+    class Meta:
+        model = models.Memory
+        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'mem_type', 'size_in_megs', 'type_of_ram')
+
+#the following 2 are derived from Memory
+class SRam(serializers.ModelSerializer):
+    class Meta:
+        model = models.Ram
+        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'mem_type', 'size_in_megs', 'type_of_ram')
+
+class SFlash_Memory(serializers.ModelSerializer):
+    class Meta:
+        model = models.Flash_Memory
+        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'mem_type', 'size_in_megs', 'type_of_ram')
 
 #these are inherited from type unit, there are 2 of them
 class SRouter(serializers.ModelSerializer):

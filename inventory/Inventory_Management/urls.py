@@ -15,13 +15,16 @@ router.register(r'all/Equipment', views.VEquipment)
 router.register(r'all/Unit', views.VUnit)
 router.register(r'all/Component', views.VComponent)
 #componet 7
-router.register(r'all/Memory', views.VMemory)
 router.register(r'all/HardDrive', views.VHardDrive)
 router.register(r'all/Mother_board', views.VMother_board)
 router.register(r'all/Central_processing_unit', views.VCentral_processing_unit)
 router.register(r'all/Optical_drive', views.VOptical_drive)
 router.register(r'all/Operating_system', views.VOperating_system)
 router.register(r'all/Power_supply_unit', views.VPower_supply_unit)
+router.register(r'all/Memory', views.VMemory)
+#these are derived from memory
+router.register(r'all/Ram', views.VRam)
+router.register(r'all/Flash_Memory', views.VFlash_Memory)
 #unit 2
 router.register(r'all/Router', views.VRouter)
 router.register(r'all/Computer', views.VComputer)
