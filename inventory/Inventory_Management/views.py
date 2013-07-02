@@ -20,9 +20,13 @@ class VModelNumber(viewsets.ModelViewSet):
     queryset=models.ModelNumber.objects.all()
     serializer_class = serializers.SModelNumber
 
-class VService(viewsets.ModelViewSet):
-    queryset=models.Service.objects.all()
+class VService_contract(viewsets.ModelViewSet):
+    queryset=models.Service_contract.objects.all()
     serializer_class = serializers.SService
+
+class VPort(viewsets.ModelViewSet):
+    queryset=models.Port.objects.all()
+    serializer_class = serializers.SPort
 
 #main inherited type
 class VEquipment(viewsets.ModelViewSet):
@@ -77,10 +81,19 @@ class VFlash_Memory(viewsets.ModelViewSet):
     serializer_class = serializers.SFlash_Memory
 
 #these are of type unit
+class VComputer(viewsets.ModelViewSet):
+    queryset=models.Computer.objects.all()
+    serializer_class = serializers.SComputer
+
 class VRouter(viewsets.ModelViewSet):
     queryset=models.Router.objects.all()
     serializer_class = serializers.SRouter
 
-class VComputer(viewsets.ModelViewSet):
-    queryset=models.Computer.objects.all()
-    serializer_class = serializers.SComputer
+#these are from type router
+class VSwitch(viewsets.ModelViewSet):
+    queryset=models.Switch.objects.all()
+    serializer_class = serializers.SSwitch
+
+class VFirewall(viewsets.ModelViewSet):
+    queryset=models.Firewall.objects.all()
+    serializer_class = serializers.SFirewall

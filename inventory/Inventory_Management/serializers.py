@@ -30,8 +30,13 @@ class SModelNumber(serializers.ModelSerializer):
 
 class SService(serializers.ModelSerializer):
     class Meta:
-        model = models.Service
+        model = models.Service_contract
         fields = ('service',)
+
+class SPort(serializers.ModelSerializer):
+    class Meta:
+        model = models.Port
+        fields = ('name', 'type_of_port')
 
 #this is the root type for all types, there is little usable need for haveing a serializer
 # for it, but included anyways so we have a means of returning all entries of the database
@@ -103,13 +108,24 @@ class SFlash_Memory(serializers.ModelSerializer):
         fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'mem_type', 'size_in_megs', 'type_of_ram')
 
 #these are inherited from type unit, there are 2 of them
-class SRouter(serializers.ModelSerializer):
-    class Meta:
-        model = models.Router
-        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'IS_tag', 'ports', 'number_of_mem_sticks', 'service', 'ram', 'flash')
-
 class SComputer(serializers.ModelSerializer):
     class Meta:
         model = models.Computer
         fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'cpu', 'optical_drive', 'hdd', 'ram', 'psu', 'number_of_mem_sticks', 'IS_tag')
 
+class SRouter(serializers.ModelSerializer):
+    class Meta:
+        model = models.Router
+        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'IS_tag', 'ports', 'number_of_mem_sticks', 'service_contract', 'ram', 'flash')
+
+#from router, we have 2 more
+
+class SFirewall(serializers.ModelSerializer):
+    class Meta:
+        model = models.Firewall
+        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'IS_tag', 'ports', 'number_of_mem_sticks', 'service_contract', 'ram', 'flash', 'expansion_slot')
+
+class SSwitch(serializers.ModelSerializer):
+    class Meta:
+        model = models.Switch
+        fields = ('manufacturer', 'model_num', 'serial_num', 'purchaseDate', 'location', 'IS_tag', 'ports', 'number_of_mem_sticks', 'service_contract', 'ram', 'flash', 'expansion_slot')

@@ -1,14 +1,15 @@
-from django.conf.urls import patterns, url, include
+#from django.conf.urls import patterns, url, include
 from rest_framework import routers
 from Inventory_Management import views
 
 router = routers.DefaultRouter()
 
-#base 4
+#base 5
 router.register(r'all/Location', views.VLocation)
 router.register(r'all/Manufacturer', views.VManufacturer)
 router.register(r'all/ModelNumber', views.VModelNumber)
-router.register(r'all/Service', views.VService)
+router.register(r'all/Service', views.VService_contract)
+router.register(r'all/Port', views.VPort)
 #main all
 router.register(r'all/Equipment', views.VEquipment)
 #main 2
@@ -28,6 +29,9 @@ router.register(r'all/Flash_Memory', views.VFlash_Memory)
 #unit 2
 router.register(r'all/Router', views.VRouter)
 router.register(r'all/Computer', views.VComputer)
+#from router
+router.register(r'all/Switch', views.VSwitch)
+router.register(r'all/Firewall', views.VFirewall)
 
 urlpatterns = router.urls
 
