@@ -1,15 +1,41 @@
-from django.conf.urls import patterns, url, include
+#from django.conf.urls import patterns, url, include
 from rest_framework import routers
 from Inventory_Management import views
 
 router = routers.DefaultRouter()
-router.register(r'Equip', views.UserViewSet)
-router.register(r'Computer', views.ComputerViewSet)
 
-urlpatterns = patterns('',
-	url(r'^', include(router.urls)),
-#    url(r'^$', views.index, name='index'),
-    url(r'^Equip/$', views.UserViewSet.as_view()),
-    url(r'^Computer/$', views.ComputerViewSet.as_view()),
-    url('^(?P<value>.+)/$', views.Custom.as_view()),
-)
+#base 5
+router.register(r'all/Location', views.VLocation)
+router.register(r'all/Manufacturer', views.VManufacturer)
+router.register(r'all/ModelNumber', views.VModelNumber)
+router.register(r'all/Service', views.VService_contract)
+router.register(r'all/Port', views.VPort)
+#main all
+router.register(r'all/Equipment', views.VEquipment)
+#main 2
+router.register(r'all/Unit', views.VUnit)
+router.register(r'all/Component', views.VComponent)
+#componet 7
+router.register(r'all/HardDrive', views.VHardDrive)
+router.register(r'all/Mother_board', views.VMother_board)
+router.register(r'all/Central_processing_unit', views.VCentral_processing_unit)
+router.register(r'all/Optical_drive', views.VOptical_drive)
+router.register(r'all/Operating_system', views.VOperating_system)
+router.register(r'all/Power_supply_unit', views.VPower_supply_unit)
+router.register(r'all/Memory', views.VMemory)
+#these are derived from memory
+router.register(r'all/Ram', views.VRam)
+router.register(r'all/Flash_Memory', views.VFlash_Memory)
+#unit 2
+router.register(r'all/Router', views.VRouter)
+router.register(r'all/Computer', views.VComputer)
+#from router
+router.register(r'all/Switch', views.VSwitch)
+router.register(r'all/Firewall', views.VFirewall)
+
+urlpatterns = router.urls
+
+#the following maintained for reasons of reference/potential expantion
+#urlpatterns += patterns('',
+#	url(r'^Manufacturer/(?P<Mname>.+)/$', views.VManufacturer.as_view()),
+#	)
