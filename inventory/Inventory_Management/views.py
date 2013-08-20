@@ -163,120 +163,120 @@ def VLocation(request):
 def VManufacturer(request):
     dictt = models.Manufacturer.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VVendor(request):
     dictt = models.Vendor.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VModelNumber(request):
     dictt = models.ModelNumber.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VService_contract(request):
     dictt = models.Service_contract.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VPort(request):
     dictt = models.Port.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VEquipment(request):
     dictt = models.Equipment.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VUnit(request):
     dictt = models.Unit.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VComponent(request):
     dictt = models.Component.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VHardDrive(request):
     dictt = models.HardDrive.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VMother_board(request):
     dictt = models.Mother_board.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VCentral_processing_unit(request):
     dictt = models.Central_processing_unit.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VOptical_drive(request):
     dictt = models.Optical_drive.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VOperating_system(request):
     dictt = models.Operating_system.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VPower_supply_unit(request):
     dictt = models.Power_supply_unit.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VMemory(request):
     dictt = models.Memory.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VRam(request):
     dictt = models.Ram.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VFlash_Memory(request):
     dictt = models.Flash_Memory.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VComputer(request):
@@ -289,20 +289,20 @@ def VComputer(request):
 def VRouter(request):
     dictt = models.Router.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
-    return HttpResponse(data, status = 200)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200))
 
 def VSwitch(request):
     dictt = models.Switch.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VFirewall(request):
     dictt = models.Firewall.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
