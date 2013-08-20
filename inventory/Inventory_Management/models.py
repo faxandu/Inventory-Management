@@ -1,8 +1,6 @@
 from django.db import models
 import datetime
 from django.utils import timezone
-
-
  
 class Equipment(models.Model):
     '''
@@ -20,13 +18,25 @@ class Unit(Equipment):
     '''
     location = models.ForeignKey('Location', blank=False)
 
+    def to_dict(self):
+        if not self.model_num:
+            model_num = ''
+        else:
+            model_num = self.model_num.id#instead of id, use to_dict when working.
+        return {
+            'manufacturer': self.manufacturer.id,
+            'model_num': model_num,
+            'serial_num': self.serial_num,
+            'purchaseDate': unicode(self.purchaseDate),
+            'location': self.location.id,
+        }
+
 
 class Component(Equipment):
     '''
         For components such as RAM, CPU, etc.
     '''
     location = models.ForeignKey('Location', blank=True, null=True)
-
 
 class Location(models.Model):
     '''
@@ -36,7 +46,7 @@ class Location(models.Model):
     room = models.CharField(max_length=4)
 
     def __unicode__(self):
-        return unicode(self.building + self.room)
+        return unicode(self.building + ' ' + self.room)
 
 
 class Manufacturer(models.Model):
@@ -107,6 +117,7 @@ class Operating_system(Component):
 
 class Power_supply_unit(Component):
     power_rating = models.CharField(max_length = 8, blank=True)
+
 
 class Service_contract(models.Model):
     service_contract = models.TextField() 

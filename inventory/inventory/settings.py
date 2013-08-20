@@ -104,7 +104,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
+    #'tokenauth.middleware.TokenAuth',#----------------------------------------------------
 )
 
 ROOT_URLCONF = 'inventory.urls'
@@ -126,22 +127,22 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Inventory_Management',
-    'corsheaders',
+    #'corsheaders',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'rest_framework',
+    #'rest_framework',
 )
 
 #required as apart of cors, 3 lines total added to settings
-CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_ALLOW_ALL = True
 
-REST_FRAMEWORK = {
+#REST_FRAMEWORK = {
 #    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
 #    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
-    'PAGINATE_BY': 10
-}
+#    'PAGINATE_BY': 10
+#}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
