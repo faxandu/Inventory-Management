@@ -291,7 +291,7 @@ def VRouter(request):
     dictt = [i.to_dict() for i in dictt]
     #data = {'Success':json.dumps(dictt)}
     data = json.dumps(dictt)
-    return HttpResponse(data, status = 200))
+    return HttpResponse(data, status = 200)
 
 def VSwitch(request):
     dictt = models.Switch.objects.all()
