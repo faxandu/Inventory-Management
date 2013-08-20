@@ -427,7 +427,7 @@ class Computer(Unit):
             'purchaseDate': unicode(self.purchaseDate),
             'location': self.location.to_dict(),
             'cpu': self.cpu.to_dict(),
-            'optical_drive': self.location.to_dict(),
+            'optical_drive': self.optical_drive.to_dict(),
             'hdd': self.hdd.to_dict(),
             'ram': self.ram.to_dict(),
             'psu': self.psu.to_dict(),
