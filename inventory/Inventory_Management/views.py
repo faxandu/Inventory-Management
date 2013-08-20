@@ -9,7 +9,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
-'''
+'''---------------legacy, uses the rest framework, we have stopped using the rest framework ---------------
 Understanding Views: these examples use the rest framework and are obsolete
 
 views are what format the data that we get/pass from the serializers. we inherit from rest_frameworks viewsets for ease
@@ -127,7 +127,7 @@ class VFirewall(viewsets.ModelViewSet):
     serializer_class = serializers.SFirewall
 
 '''
-'''
+'''--------------------------this was a test, ignore------------------------------
 @csrf_exempt
 @require_http_methods(['POST'])
 def login(request):
@@ -152,7 +152,39 @@ def logout(request):
     logout(request)
     return HttpResponse(status=200)
 '''
+'''----------------------------------------api calls without rest-----------------------------
+-------explination of calls to read data-------
+this is a break down of each line for the views using location as an example
 
+def VLocation(request):
+    request is the object that is passed into the function from the front end, there are things you can do
+    with it but are not done in this file. it still needs to be there
+    
+dictt = models.Location.objects.all()
+    dictt is just a shorted name for dictionary(cant use dict, its reserved), and we assign an object that holds
+    all instances of the location table. it is stored as an array (just how that function we call works)
+    
+dictt = [i.to_dict() for i in dictt]
+   dictt is just being reused here, it could be any variable name. the part after the assignement is just a for
+   loop that iterates though all the enteries we have of the type(location in this example) and calls the to_dict
+   function that we made in our models file, for each. this gives us a dictionary of all the enteries that we can
+   dump into a json package as, json.dumps takes a dictonary here. 
+   
+#data = {'Success':json.dumps(dictt)}
+    this just makes everything a string, or only returns "success", droped for uselessness as it wasent nessary
+    
+data = json.dumps(dictt)
+    again, data is just a variable name, we probley could of reused dictt again, but diden't. json.dumps(dictt)
+    takes the dictionary that we made in the previous usefull line, and changes it into a json package.
+    
+return HttpResponse(data, status = 200)
+    views generaly want a HttpResponce return so, it can return html to the front end. here we just return a statis code 
+    for "ok" (could be more helpfull, I know) and we also return the data (json dump) of our table.
+    
+additional notes: back in the models file
+-----calls to change database-----
+not yet implemented.
+'''
 def VLocation(request):
     dictt = models.Location.objects.all()
     dictt = [i.to_dict() for i in dictt]
