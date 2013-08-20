@@ -4,6 +4,7 @@
 from django.http import HttpResponse
 from Inventory_Management import models
 from django.core import serializers
+import json
 #for auth
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -153,114 +154,155 @@ def logout(request):
 '''
 
 def VLocation(request):
-   # user = self.request.user
-   # if not user:
-	#return HttpResponse(data, status=403)
-    location = models.Location.objects.all()
-    data = serializers.serialize('json', location)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Location.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VManufacturer(request):
-    manufacturer = models.Manufacturer.objects.all()
-    data = serializers.serialize('json', manufacturer)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Manufacturer.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VVendor(request):
-    vendor = models.Vendor.objects.all()
-    data = serializers.serialize('json', vendor)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Vendor.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VModelNumber(request):
-    modelNumber = models.ModelNumber.objects.all()
-    data = serializers.serialize('json', modelNumber)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.ModelNumber.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VService_contract(request):
-    service_contract = models.Service_contract.objects.all()
-    data = serializers.serialize('json', service_contract)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Service_contract.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VPort(request):
-    port = models.Port.objects.all()
-    data = serializers.serialize('json', port)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Port.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VEquipment(request):
-    equipment = models.Equipment.objects.all()
-    data = serializers.serialize('json', equipment)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Equipment.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
-def VUnit(request, pk):
-    unit = models.Unit.objects.all()#[i.to_dict() for i in unit], return json.dumps(thedictonaly)
-    data = serializers.serialize('json', unit)#return HttpResponce
-    return HttpResponse(data, mimetype='application/json')
+def VUnit(request):
+    dictt = models.Unit.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VComponent(request):
-    component = models.Component.objects.all()
-    data = serializers.serialize('json', component)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Component.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VHardDrive(request):
-    hardDrive = models.HardDrive.objects.all()
-    data = serializers.serialize('json', hardDrive)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.HardDrive.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VMother_board(request):
-    mother_board = models.Mother_board.objects.all()
-    data = serializers.serialize('json', mother_board)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Mother_board.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VCentral_processing_unit(request):
-    central_processing_unit  = models.Central_processing_unit.objects.all()
-    data = serializers.serialize('json', central_processing_unit)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Central_processing_unit.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VOptical_drive(request):
-    optical_drive = models.Optical_drive.objects.all()
-    data = serializers.serialize('json', optical_drive)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Optical_drive.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VOperating_system(request):
-    operating_system = models.Operating_system.objects.all()
-    data = serializers.serialize('json', operating_system)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Operating_system.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VPower_supply_unit(request):
-    power_supply_unit = models.Power_supply_unit.objects.all()
-    data = serializers.serialize('json', power_supply_unit)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Power_supply_unit.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VMemory(request):
-    memory = models.Memory.objects.all()
-    data = serializers.serialize('json', memory)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Memory.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VRam(request):
-    ram = models.Ram.objects.all()
-    data = serializers.serialize('json', ram)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Ram.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VFlash_Memory(request):
-    flash_Memory = models.Flash_Memory.objects.all()
-    data = serializers.serialize('json', flash_Memory)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Flash_Memory.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VComputer(request):
-    computer = models.Computer.objects.all()
-    data = serializers.serialize('json', computer)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Computer.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VRouter(request):
-    router = models.Router.objects.all()
-    data = serializers.serialize('json', router)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Router.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VSwitch(request):
-    switch = models.Switch.objects.all()
-    data = serializers.serialize('json', switch)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Switch.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)
 
 def VFirewall(request):
-    firewall = models.Firewall.objects.all()
-    data = serializers.serialize('json', firewall)
-    return HttpResponse(data, mimetype='application/json')
+    dictt = models.Firewall.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    data = {'Success':json.dumps(dictt)}
+    data = json.dumps(data)
+    return HttpResponse(data, status = 200)

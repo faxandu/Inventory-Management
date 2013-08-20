@@ -1,4 +1,4 @@
-#!/home/faxandu/projects/inventory/bin/python
+#!/home/Faxandu/Desktop/projects/Inventory-Management/bin/python
 from django.core import management
 
 if __name__ == "__main__":
