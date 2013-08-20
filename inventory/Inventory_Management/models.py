@@ -78,8 +78,8 @@ class Location(models.Model):
     def to_dict(self):
         return {
             'id':self.id,
-            'room':unicode(self.room),
-            'building':unicode(self.building)
+            'room':self.room,
+            'building':self.building
         }
 
 

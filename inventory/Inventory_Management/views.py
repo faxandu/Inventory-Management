@@ -156,8 +156,8 @@ def logout(request):
 def VLocation(request):
     dictt = models.Location.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VManufacturer(request):
@@ -282,8 +282,8 @@ def VFlash_Memory(request):
 def VComputer(request):
     dictt = models.Computer.objects.all()
     dictt = [i.to_dict() for i in dictt]
-    data = {'Success':json.dumps(dictt)}
-    data = json.dumps(data)
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
 def VRouter(request):
