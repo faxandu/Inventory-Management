@@ -1,6 +1,6 @@
 '''
 --------------------for api calls to read database---------------
-in each table of our database, a function call to_dict is created, in order to create dictonaries of 
+in each table of our database, a function call to_dict is created, in order to create dictionaries of 
 all information in the class based on:
 fieldname:value
 so that when we call it in a view, we can use a serializer (which requires a dictonary) to drop the information in the database into a json package (which is the format of data that is transmitted between the front end and back end)
@@ -15,15 +15,15 @@ example and explination:
 
 if we just return an instance of the table itself without digging down into "other type" as the dictionaries in the
 dictionaries do, it will just return the keys, which means on the front end if we were to say, do a call to equipment
-(its the first table defined after this comment as of writing) you will see that the manufacturer field is a forignkey.
+(its the first table defined after this comment as of writing) - you will see that the manufacturer field is a forignkey.
 if you just call a single instance of the table without any other work, it returns in the json package something to the
 effet of:
 
 "manufacturer": 1
 
 which, not only is lacking information, to do calls back to our database on the front end takes about 70~ lines of code
-per entery that it needs to be done. but if we do it on the backend, its 70~ lines total, if even. after doing the extra
-work to spell out dictionaries in dictionaries, we wind up with something more like:
+per entery that it needs to be done to fetch the rest of the information. but if we do it on the backend, its 70~ lines
+total, if even. after doing the extra work to spell out dictionaries in dictionaries, we wind up with something more like:
 
 "manufacturer": {"id": 1, "name": "Dell"}
 
