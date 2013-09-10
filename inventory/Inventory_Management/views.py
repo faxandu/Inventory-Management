@@ -338,3 +338,77 @@ def VFirewall(request):
     #data = {'Success':json.dumps(dictt)}
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
+'''
+this "All" function exist per request the front end devolper, wanted it so it would be easier to make a
+"shopping list" like appearance on the front end, which is easier with a dump of EVERYTHING instead of 
+makeing repeated calls to all things nessary. it returns all needed to assist in making that work
+'''
+def VAll(request):
+    #temp = models.Location.objects.all()
+    #dictt = [i.to_dict() for i in temp]
+    
+    #temp = models.Manufacturer.objects.all()
+    #dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Vendor.objects.all()
+    dictt = [i.to_dict() for i in temp]
+    
+    #temp = models.ModelNumber.objects.all()
+    #dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Service_contract.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Port.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Equipment.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Unit.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Component.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.HardDrive.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Mother_board.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Central_processing_unit.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Optical_drive.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Operating_system.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Power_supply_unit.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Memory.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Ram.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Flash_Memory.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Computer.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Router.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Switch.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    
+    temp = models.Firewall.objects.all()
+    dictt += [i.to_dict() for i in temp]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)

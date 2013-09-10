@@ -2,10 +2,6 @@ from django.conf.urls import patterns, url, include
 #from rest_framework import routers
 
 
-
-#asdf
-
-
 from Inventory_Management import views
 
 '''
@@ -72,4 +68,5 @@ urlpatterns = patterns('',
 	url(r'^all/Router', views.VRouter),
 	url(r'^all/Switch', views.VSwitch),
 	url(r'^all/Firewall', views.VFirewall),
+	url(r'^all/All', views.VAll),
 	)

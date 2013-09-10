@@ -363,6 +363,7 @@ class Router(Unit):
         else:
             model_num = self.model_num.to_dict()
         return {
+            'type':"Router",
             'id':self.id,
             'manufacturer':self.manufacturer.to_dict(),
             'model_num':self.model_num.to_dict(),
@@ -398,6 +399,7 @@ class Firewall(Router):
         else:
             model_num = self.model_num.to_dict()
         return {
+            'type':"Router",
             'id':self.id,
             'manufacturer':self.manufacturer.to_dict(),
             'model_num':self.model_num.to_dict(),
@@ -422,6 +424,7 @@ class Switch(Router):
         else:
             model_num = self.model_num.to_dict()
         return {
+            'type':"Router",
             'id':self.id,
             'manufacturer':self.manufacturer.to_dict(),
             'model_num':self.model_num.to_dict(),
@@ -452,6 +455,7 @@ class Computer(Unit):
         else:
             model_num = self.model_num.to_dict()
         return {
+            'type':"Computer",
             'id':self.id,
             'manufacturer':self.manufacturer.to_dict(),
             'model_num':self.model_num.to_dict(),
