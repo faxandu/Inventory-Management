@@ -182,8 +182,7 @@ return HttpResponse(data, status = 200)
     for "ok" (could be more helpfull, I know) and we also return the data (json dump) of our table.
     
 additional notes: back in the models file
------calls to change database-----
-not yet implemented.
+
 '''
 def VLocation(request):
     dictt = models.Location.objects.all()
@@ -412,3 +411,16 @@ def VAll(request):
     #data = {'Success':json.dumps(dictt)}
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
+
+'''    
+-----calls to change database-----
+not yet implemented.
+    building = models.CharField(max_length=2)
+    room = models.CharField(max_length=4)
+'''
+'''
+@csrf_exempt
+@require_http_methods(['POST'])
+def Set_Location(request):
+    post = request.POST
+    '''
