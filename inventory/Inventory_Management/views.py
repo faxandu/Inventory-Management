@@ -9,6 +9,8 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
+
+from django.utils import simplejson
 '''---------------legacy, uses the rest framework, we have stopped using the rest framework ---------------
 Understanding Views: these examples use the rest framework and are obsolete
 
@@ -158,7 +160,7 @@ this is a break down of each line for the views using location as an example
 
 def VLocation(request):
     request is the object that is passed into the function from the front end, there are things you can do
-    with it but are not done in this file. it still needs to be there
+    with it but are not done in the calls that fetch data. it still needs to be there
     
 dictt = models.Location.objects.all()
     dictt is just a shorted name for dictionary(cant use dict, its reserved), and we assign an object that holds
@@ -340,7 +342,7 @@ def VFirewall(request):
 '''
 this "All" function exist per request the front end devolper, wanted it so it would be easier to make a
 "shopping list" like appearance on the front end, which is easier with a dump of EVERYTHING instead of 
-makeing repeated calls to all things nessary. it returns all needed to assist in making that work
+makeing repeated calls to all things nessary. it returns all needed in a uber dictionary to assist in making that work
 '''
 def VAll(request):
     #temp = models.Location.objects.all()
@@ -418,9 +420,16 @@ not yet implemented.
     building = models.CharField(max_length=2)
     room = models.CharField(max_length=4)
 '''
-'''
-@csrf_exempt
-@require_http_methods(['POST'])
+#note, when makeing test, you just make a dictionary of dummy information, then save, then call.
+#@csrf_exempt
+#@require_http_methods(['POST'])
 def Set_Location(request):
     post = request.POST
-    '''
+    package = models.Location()
+    package.building = 'ne'
+    package.room = '400'
+    
+    package.save()
+    data = {'data': 'Request Created'}
+    code = 201
+    return HttpResponse(simplejson.dumps(package.to_dict()), status=code)

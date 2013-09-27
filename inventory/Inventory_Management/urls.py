@@ -69,4 +69,5 @@ urlpatterns = patterns('',
 	url(r'^all/Switch', views.VSwitch),
 	url(r'^all/Firewall', views.VFirewall),
 	url(r'^all/All', views.VAll),
+	url(r'^all/set', views.Set_Location),
 	)

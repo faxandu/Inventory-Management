@@ -1,7 +1,11 @@
 #I prefix all classes with a captial S so signify that they are serializer classes, while
 #there is no techinical reason for this, it helps to avoid ambiguity in general talks about
 #the system
-
+'''
+===============================
+THIS FILE IS LEGACY FROM THE REST FRAMEWORK, IT IS UNUSED
+===============================
+'''
 '''
 Understanding what is going on in this file so that it may be used as a reference
 
