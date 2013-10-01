@@ -23,13 +23,31 @@ the following are support/suplemental fields, things that are consistant over ma
 reiterated over and over in diffrent tables, so are set in there own tables to save space and reduce user error
 '''
 
+serail_type = (
+    ('HD','Hard_drive'),
+    ('MB','Mother_board'),
+    ('MT','Memory'),
+    ('OS','Operating_system'),
+    ('CP','CPU'),
+    ('FT','Flash_type'),
+    ('OD','Optical_drive'),
+    )
+    
+class Serial(models.Model):
+    name = models.CharField(max_length = 25, unique = True)
+    stype = models.CharField(max_length = 20, choices = serail_type)
+
+#class Memory_type(models.model):
+#    name = models.CharField(max_length = 25, unique = True)
+
+class Manufacturer(models.Model):
+    name = models.CharField(max_length = 25, unique = True)
+
+''' removed to reduce table useage
 class Hard_drive_model(models.Model):
     name = models.CharField(max_length = 25, unique = True)
 
 class Mother_board_model(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-
-class Memory_type(models.model):
     name = models.CharField(max_length = 25, unique = True)
 
 class Operating_system_name(models.model):
@@ -38,14 +56,12 @@ class Operating_system_name(models.model):
 class CPU_model(models.Model):
     name = models.CharField(max_length = 25, unique = True)
 
-class Hard_Drive_model(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-
 class Flash_type(models.Model):
     name = models.CharField(max_length = 25, unique = True)
 
 class Optical_drive_model(models.Model)
     name = models.CharField(max_length = 25, unique = True)
+'''
 
 '''
 main/anchor tables
@@ -63,7 +79,7 @@ class Equipment(models.Model):
     acquisition_date = models.DateField()
     #service_tag = models.CharField(max_length = 35, blank = True, null = True)
     IS = models.CharField(max_length = 35, blank = True, null = True)
-    machine_name = CharField(max_length = 100, unique = False blank = True, null = True)
+    machine_name = models.CharField(max_length = 100, unique = False, blank = True, null = True)
     in_use = models.BooleanField()
     location = models.TextField()
 
@@ -92,38 +108,38 @@ likewise, having them all inherit from a common type makes for an easy API call
 
 class Hard_drive(models.Model):
     size_in_gigs = models.IntegerField()
-    model = models.ForeignKey('Hard_drive_model')
+    model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
     #interface type, add later perhaps
 
 class Mother_board(models.Model):
-    model = models.ForeignKey('Mother_board_model')
+    model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
 
 class Central_processing_unit(models.Model):
-    model = models.ForeignKey('CPU_model')
+    model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
 
 class Power_supply_unit(models.Model):
-    model = models.ForeignKey('PSU_model')
+    model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
 
 class Optical_drive(models.Model):
-    model = models.ForeignKey('Optical_drive_model')
+    model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
 
 class Memory(models.Model):
-    memory_type = models.ForeignKey('Memory_type')
+    memory_type = models.ForeignKey('Serial')
     manufacturer = models.ForeignKey('Manufacturer')
     size_in_gigs = models.IntegerField()
     location = models.ForeignKey('Equipment')
 
 class Operating_system(models.Model):
-    name = models.ForeignKey('Operating_system_name')
+    name = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
 
 class Flash_Memory(models.Model):
-    flash_type = models.ForeignKey('Flash_type')
+    flash_type = models.ForeignKey('Serial')
     size_in_megs = models.IntegerField()
     location = models.ForeignKey('Equipment')
     
@@ -131,7 +147,14 @@ class Flash_Memory(models.Model):
 
 class Service_contract(models.Model):
     name = models.CharField(max_length = 25, unique = True)
-    
+    location = models.ForeignKey('Equipment')
+    expire_date = models.DateField()
+    additional_notes = models.TextField()
+
+class Expantion_card(models.Model):
+    description = models.TextField()
+    location = models.ForeignKey('Equipment')
+
 '''
 service contract :
 number -charfield
