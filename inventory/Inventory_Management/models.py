@@ -23,7 +23,8 @@ the following are support/suplemental fields, things that are consistant over ma
 reiterated over and over in diffrent tables, so are set in there own tables to save space and reduce user error
 '''
 
-serail_type = (
+#this object is used for the Serial table as the source for the choices in stype
+serial_type = (
     ('HD','Hard_drive'),
     ('MB','Mother_board'),
     ('MT','Memory'),
@@ -35,7 +36,7 @@ serail_type = (
     
 class Serial(models.Model):
     name = models.CharField(max_length = 25, unique = True)
-    stype = models.CharField(max_length = 20, choices = serail_type)
+    stype = models.CharField(max_length = 20, choices = serial_type)
 
 #class Memory_type(models.model):
 #    name = models.CharField(max_length = 25, unique = True)
@@ -78,7 +79,7 @@ so the user may enter in a breif description of where its at. (ie, james took it
 class Equipment(models.Model):
     acquisition_date = models.DateField()
     #service_tag = models.CharField(max_length = 35, blank = True, null = True)
-    IS = models.CharField(max_length = 35, blank = True, null = True)
+    IS = models.CharField(max_length = 35, blank = True, unique = False, null = True)
     machine_name = models.CharField(max_length = 100, unique = False, blank = True, null = True)
     in_use = models.BooleanField()
     location = models.TextField()
@@ -101,7 +102,8 @@ more spificaly, they will contain 3 diffrent things at most: common datafields t
 datafields that tend to repeate themselves(the foreignkey fields that are not to equipment) such as OS names,
 CPU socket types, stuff that we will want to add on to in the future, but not change once implemented. then the
 field that links to something of type equipment, which represents a full machine that it is attached to.
-likewise, having them all inherit from a common type makes for an easy API call
+likewise,
+pending -- having them all inherit from a common type makes for an easy API call
 '''
 
 #acquisition_date = models.DateField()
@@ -129,7 +131,7 @@ class Optical_drive(models.Model):
     location = models.ForeignKey('Equipment')
 
 class Memory(models.Model):
-    memory_type = models.ForeignKey('Serial')
+    model = models.ForeignKey('Serial')
     manufacturer = models.ForeignKey('Manufacturer')
     size_in_gigs = models.IntegerField()
     location = models.ForeignKey('Equipment')
@@ -139,7 +141,7 @@ class Operating_system(models.Model):
     location = models.ForeignKey('Equipment')
 
 class Flash_Memory(models.Model):
-    flash_type = models.ForeignKey('Serial')
+    model = models.ForeignKey('Serial')
     size_in_megs = models.IntegerField()
     location = models.ForeignKey('Equipment')
     

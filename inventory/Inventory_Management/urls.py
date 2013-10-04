@@ -4,7 +4,7 @@ from django.conf.urls import patterns, url, include
 
 from Inventory_Management import views
 
-'''
+''' removed due to removale of rest framework
 router = routers.DefaultRouter()
 
 #base 5
@@ -44,7 +44,7 @@ urlpatterns = router.urls
 #urlpatterns += patterns('',
 #	url(r'^Manufacturer/(?P<Mname>.+)/$', views.VManufacturer.as_view()),
 #	)Service_contract
-
+'''removed due to database change
 urlpatterns = patterns('',
 	url(r'^all/Location', views.VLocation),
 	url(r'^all/Manufacturer', views.VManufacturer),
@@ -71,3 +71,7 @@ urlpatterns = patterns('',
 	url(r'^all/All', views.VAll),
 	url(r'^all/set', views.Set_Location),
 	)
+'''
+
+urlpatterns = patterns('',
+)
