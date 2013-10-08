@@ -1,6 +1,8 @@
 '''
 Explinataion of database
 
+for a breakdown of each field, see the bottom of the file
+
 the database for this project is split up into three catagories for its tables
 support/suplemental tables
 main/anchor tables
@@ -37,12 +39,18 @@ serial_type = (
 class Serial(models.Model):
     name = models.CharField(max_length = 25, unique = True)
     stype = models.CharField(max_length = 20, choices = serial_type)
+    
+    def __unicode__(self):
+        return unicode(self.name)
 
 #class Memory_type(models.model):
 #    name = models.CharField(max_length = 25, unique = True)
 
-class Manufacturer(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
+#class Manufacturer(models.Model):
+#    name = models.CharField(max_length = 25, unique = True)
+    
+    def __unicode__(self):
+        return self.name
 
 ''' removed to reduce table useage
 class Hard_drive_model(models.Model):
@@ -77,12 +85,15 @@ so the user may enter in a breif description of where its at. (ie, james took it
 '''
 
 class Equipment(models.Model):
-    acquisition_date = models.DateField()
+    acquisition_date = models.DateField(blank = True, null = True)
     #service_tag = models.CharField(max_length = 35, blank = True, null = True)
     IS = models.CharField(max_length = 35, blank = True, unique = False, null = True)
     machine_name = models.CharField(max_length = 100, unique = False, blank = True, null = True)
     in_use = models.BooleanField()
-    location = models.TextField()
+    location = models.TextField(blank = True, null = True)
+    
+    def __unicode__(self):
+        return self.machine_name
 
 class Computer(Equipment): pass
 
@@ -109,62 +120,118 @@ pending -- having them all inherit from a common type makes for an easy API call
 #acquisition_date = models.DateField()
 
 class Hard_drive(models.Model):
-    size_in_gigs = models.IntegerField()
+    total_GB = models.IntegerField()
     model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
     #interface type, add later perhaps
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
-class Mother_board(models.Model):
+class Motherboard(models.Model):
     model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
 class Central_processing_unit(models.Model):
     model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
 class Power_supply_unit(models.Model):
     model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
 class Optical_drive(models.Model):
     model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
-class Memory(models.Model):
+class RAM(models.Model):
     model = models.ForeignKey('Serial')
-    manufacturer = models.ForeignKey('Manufacturer')
+    #manufacturer = models.ForeignKey('Manufacturer')
     size_in_gigs = models.IntegerField()
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
 class Operating_system(models.Model):
-    name = models.ForeignKey('Serial')
+    model = models.ForeignKey('Serial')
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
 class Flash_Memory(models.Model):
     model = models.ForeignKey('Serial')
     size_in_megs = models.IntegerField()
     location = models.ForeignKey('Equipment')
     
-    #printers, KVM
+    def __unicode__(self):
+        return unicode(self.model)
 
 class Service_contract(models.Model):
     name = models.CharField(max_length = 25, unique = True)
     location = models.ForeignKey('Equipment')
     expire_date = models.DateField()
     additional_notes = models.TextField()
+    
+    def __unicode__(self):
+        unicode(self.model)
 
-class Expantion_card(models.Model):
+class Expansion_card(models.Model):
     description = models.TextField()
     location = models.ForeignKey('Equipment')
+    
+    def __unicode__(self):
+        return unicode(self.model)
 
 '''
-service contract :
-number -charfield
-link to vendor -foreinkey
-experation date -datefield
-additional notes -textfield
+breakdown of a database table:
 
-expantion card:
-textfield,
+for reference, we will use the hard drive field for reference by line
 
+class Hard_drive(models.Model):
+    size_in_gigs = models.IntegerField()
+    model = models.ForeignKey('Serial')
+    location = models.ForeignKey('Equipment')
+    
+breaking down the fields
+
+class Hard_drive(models.Model):
+
+tables in Django are represented as classes, which inherits from Model (hence the import at the top for models)
+due to how python deals with importing code, we reference it by file_name.class_name . Hard_drive is just the table
+name, and class is, well, its a class.
+
+    size_in_gigs = models.IntegerField()
+    
+don't forget indentation, we still adhear to python syntax(this project uses 4 spaces per indent). whats on the left
+of the assignement operator is just a variable name, about what you would expect from any language. on the right
+we once again take something from the models file, in this case an IntergerField. this is just an object that we use
+to represent -as you have guessed- Integers in the database. there's a long list of what can be used here and most 
+are very self descriptive in the name, such as Floatfield, CharField, etc...
+
+    model = models.ForeignKey('Serial')
+    
+ForeignKey is how we make relations in the database, what this is saying is that the field is pointing to another table.
+in this case, we are specifying the Serial table. what it actualy stores in the database is the ID field of that table.
+(if not known at this time, all tables will automaticaly add the ID field for its primary key, if one is not specified)
+
+making note of one other field here
+
+class Computer(Equipment): pass
+
+what this means is its inheriting from equipment so it takes on all of its fields, and pass is a python syntax
+saying that there is no mode code to add on to the class, just finish it.
 '''
