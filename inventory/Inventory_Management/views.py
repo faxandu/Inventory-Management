@@ -186,6 +186,8 @@ return HttpResponse(data, status = 200)
 additional notes: back in the models file
 
 '''
+
+''' these are depreciated, from an old database that did not do what we needed it to.
 def VLocation(request):
     dictt = models.Location.objects.all()
     dictt = [i.to_dict() for i in dictt]
@@ -339,11 +341,11 @@ def VFirewall(request):
     #data = {'Success':json.dumps(dictt)}
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
-'''
+
 this "All" function exist per request the front end devolper, wanted it so it would be easier to make a
 "shopping list" like appearance on the front end, which is easier with a dump of EVERYTHING instead of 
 makeing repeated calls to all things nessary. it returns all needed in a uber dictionary to assist in making that work
-'''
+
 def VAll(request):
     #temp = models.Location.objects.all()
     #dictt = [i.to_dict() for i in temp]
@@ -414,11 +416,13 @@ def VAll(request):
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
+'''
 '''    
 -----calls to change database-----
 not yet implemented.
     building = models.CharField(max_length=2)
     room = models.CharField(max_length=4)
+'''
 '''
 #note, when makeing test, you just make a dictionary of dummy information, then save, then call.
 #@csrf_exempt
@@ -426,10 +430,11 @@ not yet implemented.
 def Set_Location(request):
     post = request.POST
     package = models.Location()
-    package.building = 'ne'
-    package.room = '400'
+    package.building = 'ne' #post.building
+    package.room = '400' #post.room
     
     package.save()
     data = {'data': 'Request Created'}
     code = 201
     return HttpResponse(simplejson.dumps(package.to_dict()), status=code)
+'''

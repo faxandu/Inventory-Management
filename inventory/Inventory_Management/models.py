@@ -25,8 +25,8 @@ the following are support/suplemental fields, things that are consistant over ma
 reiterated over and over in diffrent tables, so are set in there own tables to save space and reduce user error
 '''
 
-#this object is used for the Serial table as the source for the choices in stype
-serial_type = (
+#this object is used for the Modelnum table as the source for the choices in stype
+model_type = (
     ('HD','Hard_drive'),
     ('MB','Mother_board'),
     ('MT','Memory'),
@@ -36,9 +36,9 @@ serial_type = (
     ('OD','Optical_drive'),
     )
     
-class Serial(models.Model):
+class Modelnum(models.Model):
     name = models.CharField(max_length = 25, unique = True)
-    stype = models.CharField(max_length = 20, choices = serial_type)
+    stype = models.CharField(max_length = 20, choices = model_type)
     
     def __unicode__(self):
         return unicode(self.name)
@@ -121,7 +121,7 @@ pending -- having them all inherit from a common type makes for an easy API call
 
 class Hard_drive(models.Model):
     total_GB = models.IntegerField()
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     #interface type, add later perhaps
     
@@ -129,35 +129,35 @@ class Hard_drive(models.Model):
         return unicode(self.model)
 
 class Motherboard(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     
     def __unicode__(self):
         return unicode(self.model)
 
 class Central_processing_unit(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     
     def __unicode__(self):
         return unicode(self.model)
 
 class Power_supply_unit(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     
     def __unicode__(self):
         return unicode(self.model)
 
 class Optical_drive(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     
     def __unicode__(self):
         return unicode(self.model)
 
 class RAM(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     #manufacturer = models.ForeignKey('Manufacturer')
     size_in_gigs = models.IntegerField()
     location = models.ForeignKey('Equipment')
@@ -166,14 +166,14 @@ class RAM(models.Model):
         return unicode(self.model)
 
 class Operating_system(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     
     def __unicode__(self):
         return unicode(self.model)
 
 class Flash_Memory(models.Model):
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     size_in_megs = models.IntegerField()
     location = models.ForeignKey('Equipment')
     
@@ -203,7 +203,7 @@ for reference, we will use the hard drive field for reference by line
 
 class Hard_drive(models.Model):
     size_in_gigs = models.IntegerField()
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
     
 breaking down the fields
@@ -222,10 +222,10 @@ we once again take something from the models file, in this case an IntergerField
 to represent -as you have guessed- Integers in the database. there's a long list of what can be used here and most 
 are very self descriptive in the name, such as Floatfield, CharField, etc...
 
-    model = models.ForeignKey('Serial')
+    model = models.ForeignKey('Modelnum')
     
 ForeignKey is how we make relations in the database, what this is saying is that the field is pointing to another table.
-in this case, we are specifying the Serial table. what it actualy stores in the database is the ID field of that table.
+in this case, we are specifying the Modelnum table. what it actualy stores in the database is the ID field of that table.
 (if not known at this time, all tables will automaticaly add the ID field for its primary key, if one is not specified)
 
 making note of one other field here

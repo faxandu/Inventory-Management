@@ -25,7 +25,7 @@ class ServerAdmin(admin.ModelAdmin):
 #just a register dump so we can modify anything inside the admin interface
 admin.site.register(Equipment, EquipmentAdmin)
 #admin.site.register(Manufacturer)
-admin.site.register(Serial)
+admin.site.register(Modelnum)
 admin.site.register(Computer, ComputerAdmin)
 admin.site.register(Router, RouterAdmin)
 admin.site.register(Switch, SwitchAdmin)
