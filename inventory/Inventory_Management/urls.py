@@ -74,4 +74,16 @@ urlpatterns = patterns('',
 '''
 
 urlpatterns = patterns('',
+       url(r'^all/Computer', views.VComputer),
+       
+       url(r'^all/Hard_drive', views.VHard_drive),
+       url(r'^all/Motherboard', views.VMotherboard),
+       url(r'^all/Central_processing_unit', views.VCentral_processing_unit),
+       url(r'^all/Power_supply_unit', views.VPower_supply_unit),
+       url(r'^all/Optical_drive', views.VOptical_drive),
+       url(r'^all/RAM', views.VRAM),
+       url(r'^all/Operating_system', views.VOperating_system),
+       url(r'^all/Flash_memory', views.VFlash_Memory),
+       url(r'^all/Service_contract', views.VService_contract),
+       url(r'^all/Expansion_card', views.VExpansion_card),
 )

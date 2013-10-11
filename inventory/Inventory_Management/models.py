@@ -1,7 +1,7 @@
 '''
 Explinataion of database
 
-for a breakdown of each field, see the bottom of the file
+for a breakdown of each field, see the bottom of the file, likewise for the functions attached to the classes
 
 the database for this project is split up into three catagories for its tables
 support/suplemental tables
@@ -37,20 +37,22 @@ model_type = (
     )
     
 class Modelnum(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-    stype = models.CharField(max_length = 20, choices = model_type)
+    model_number = models.CharField(max_length = 25, unique = True)
+    model_type = models.CharField(max_length = 20, choices = model_type)
     
     def __unicode__(self):
-        return unicode(self.name)
+        return unicode(self.model_number)
+
+    def to_dict(self):
+        return {
+            'name': self.model_number,
+        }
 
 #class Memory_type(models.model):
 #    name = models.CharField(max_length = 25, unique = True)
 
 #class Manufacturer(models.Model):
 #    name = models.CharField(max_length = 25, unique = True)
-    
-    def __unicode__(self):
-        return self.name
 
 ''' removed to reduce table useage
 class Hard_drive_model(models.Model):
@@ -91,9 +93,24 @@ class Equipment(models.Model):
     machine_name = models.CharField(max_length = 100, unique = False, blank = True, null = True)
     in_use = models.BooleanField()
     location = models.TextField(blank = True, null = True)
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'acquisition_date' : unicode(self.acquisition_date),
+            'IS' : unicode(self.IS),
+            'machine_name' : unicode(self.machine_name),
+            'in_use' : self.in_use,
+            'location' : unicode(self.location),
+        }
     
     def __unicode__(self):
         return self.machine_name
+        
+    def part_view(self):
+        return {
+            'machine_name':self.machine_name,
+        }
 
 class Computer(Equipment): pass
 
@@ -125,12 +142,27 @@ class Hard_drive(models.Model):
     location = models.ForeignKey('Equipment')
     #interface type, add later perhaps
     
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'total_GB' : self.total_GB,
+            'model' : self.model.to_dict(),
+            'location' : self.location.part_view(),
+        }
+    
     def __unicode__(self):
         return unicode(self.model)
 
 class Motherboard(models.Model):
     model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -138,6 +170,13 @@ class Motherboard(models.Model):
 class Central_processing_unit(models.Model):
     model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -145,6 +184,13 @@ class Central_processing_unit(models.Model):
 class Power_supply_unit(models.Model):
     model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -152,6 +198,13 @@ class Power_supply_unit(models.Model):
 class Optical_drive(models.Model):
     model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -161,6 +214,14 @@ class RAM(models.Model):
     #manufacturer = models.ForeignKey('Manufacturer')
     size_in_gigs = models.IntegerField()
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'size_in_gigs' : self.size_in_gigs,
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -168,14 +229,29 @@ class RAM(models.Model):
 class Operating_system(models.Model):
     model = models.ForeignKey('Modelnum')
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
 
-class Flash_Memory(models.Model):
+class Flash_memory(models.Model):
     model = models.ForeignKey('Modelnum')
     size_in_megs = models.IntegerField()
     location = models.ForeignKey('Equipment')
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'model' : self.model.to_dict(),
+            'size_in_megs' : self.size_in_megs,
+            'location' : self.location.part_view(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -185,16 +261,32 @@ class Service_contract(models.Model):
     location = models.ForeignKey('Equipment')
     expire_date = models.DateField()
     additional_notes = models.TextField()
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'name' : self.name,
+            'location' : self.location.part_view(),
+            'expire_date' : unicode(self.expire_date),
+            'additional_notes' : self.additional_notes,
+        }
     
     def __unicode__(self):
-        unicode(self.model)
+        unicode(self.name)
 
 class Expansion_card(models.Model):
     description = models.TextField()
     location = models.ForeignKey('Equipment')
-    
+
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'description' : self.description,
+            'location' : self.location.part_view(),
+        }
+
     def __unicode__(self):
-        return unicode(self.model)
+        return unicode(self.description)
 
 '''
 breakdown of a database table:

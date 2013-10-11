@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     #url(r'^logout/$', views.logout),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^Inventory_Management/', include('Inventory_Management.urls')),
+    url(r'.*', include(admin.site.urls)),
     #url(r'^Equip/$', views.UserViewSet.as_view()),
     #url(r'^Computer/$', views.ComputerViewSet.as_view()),
 )

@@ -8,7 +8,7 @@ import json
 #for auth
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-
+from django.forms.models import model_to_dict
 
 from django.utils import simplejson
 '''---------------legacy, uses the rest framework, we have stopped using the rest framework ---------------
@@ -173,7 +173,7 @@ dictt = [i.to_dict() for i in dictt]
    dump into a json package as, json.dumps takes a dictonary here. 
    
 #data = {'Success':json.dumps(dictt)}
-    this just makes everything a string, or only returns "success", droped for uselessness as it wasent nessary
+    this just makes everything a string, or only returns "success", droped for uselessness as it was not nessary
     
 data = json.dumps(dictt)
     again, data is just a variable name, we probley could of reused dictt again, but diden't. json.dumps(dictt)
@@ -417,7 +417,118 @@ def VAll(request):
     return HttpResponse(data, status = 200)
 
 '''
+#----------------------------------------------------Start of actual code-----------------------------------
+def VComputer(request):
+    dictt = models.Computer.objects.all()[0]
+    HD = dictt.hard_drive_set.all()
+    MB = dictt.motherboard_set.all()
+    CPU = dictt.central_processing_unit_set.all()
+    PSU = dictt.power_supply_unit_set.all()
+    OD = dictt.optical_drive_set.all()
+    RAM = dictt.ram_set.all()
+    OS = dictt.operating_system_set.all()
+    FM = dictt.flash_memory_set.all()
+    SC = dictt.service_contract_set.all()
+    EC = dictt.expansion_card_set.all()
+    
+    dictt = [i.to_dict() for i in HD]
+    dictt += [i.to_dict() for i in MB]
+    dictt += [i.to_dict() for i in CPU]
+    dictt += [i.to_dict() for i in PSU]
+    dictt += [i.to_dict() for i in OD]
+    dictt += [i.to_dict() for i in RAM]
+    dictt += [i.to_dict() for i in OS]
+    dictt += [i.to_dict() for i in FM]
+    dictt += [i.to_dict() for i in SC]
+    dictt += [i.to_dict() for i in EC]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VHard_drive(request):
+    dictt = models.Hard_drive.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VMotherboard(request):
+    dictt = models.Motherboard.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VCentral_processing_unit(request):
+    dictt = models.Central_processing_unit.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VPower_supply_unit(request):
+    dictt = models.Power_supply_unit.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VOptical_drive(request):
+    dictt = models.Optical_drive.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VRAM(request):
+    dictt = models.RAM.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VOperating_system(request):
+    dictt = models.Operating_system.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VFlash_Memory(request):
+    dictt = models.Flash_Memory.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VService_contract(request):
+    dictt = models.Service_contract.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VExpansion_card(request):
+    dictt = models.Expansion_card.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+'''
+    obj = models.Hard_drive.objects.all()[0]
+    obj = model_to_dict(obj)
+    obj = json.dumps(obj)
+    return HttpResponse(obj, status = 200)
+'''
 '''    
+def VFirewall(request):
+    dictt = models.Firewall.objects.all()
+    dictt = [i.to_dict() for i in dictt]
+    #data = {'Success':json.dumps(dictt)}
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+    
 -----calls to change database-----
 not yet implemented.
     building = models.CharField(max_length=2)
