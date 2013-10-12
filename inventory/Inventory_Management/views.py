@@ -11,6 +11,8 @@ from django.views.decorators.http import require_http_methods
 from django.forms.models import model_to_dict
 
 from django.utils import simplejson
+
+#-------------------most code here is unused/depreciated, scroll to near bottom for relevent code--------------------
 '''---------------legacy, uses the rest framework, we have stopped using the rest framework ---------------
 Understanding Views: these examples use the rest framework and are obsolete
 
@@ -418,6 +420,7 @@ def VAll(request):
 
 '''
 #----------------------------------------------------Start of actual code-----------------------------------
+#line by line explination of the views are at the bottom of the document
 def VComputer(request):
     dictt = models.Computer.objects.all()[0]
     HD = dictt.hard_drive_set.all()
@@ -441,7 +444,6 @@ def VComputer(request):
     dictt += [i.to_dict() for i in FM]
     dictt += [i.to_dict() for i in SC]
     dictt += [i.to_dict() for i in EC]
-    #data = {'Success':json.dumps(dictt)}
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
@@ -534,7 +536,7 @@ not yet implemented.
     building = models.CharField(max_length=2)
     room = models.CharField(max_length=4)
 '''
-'''
+'''----------------------this is just a working example of saving to the database on the old database------------
 #note, when makeing test, you just make a dictionary of dummy information, then save, then call.
 #@csrf_exempt
 #@require_http_methods(['POST'])
@@ -548,4 +550,39 @@ def Set_Location(request):
     data = {'data': 'Request Created'}
     code = 201
     return HttpResponse(simplejson.dumps(package.to_dict()), status=code)
+'''
+
+'''------------------------------------Explination of code--------------------------------------------------
+-----the following explains what is used for full indivual machine calls
+def VComputer(request):
+    dictt = models.Computer.objects.all()[0]
+dictt is first used here to grab an instance of a computer system from the database. we set it to be from the file
+models, the table Computer, then look at all the objects in the table then grab one based on its id
+
+    HD = dictt.hard_drive_set.all()
+this line is repeated for all possible objects (with unique variable names) that are parts attached to a machine, here, 
+we have HD (short for hard drive) and set it to be an series of instances of all hard drives that are pointing to the 
+computer object w pulled. the exact function call/syntax here is [object].[forientable]_set.all(). broken down further, 
+object is any single object, that can/does have other tables in the database pointing to it (our computer system). then, 
+forientable is a DIFFRENT table that POINTS TO THE FIRST OBJECT, all lower case, underscore set. Django makes this function
+by default when you use a forien key in any table for reasons of back referenceing. the end result of this one is it grabs
+anything that is pointing to our given computer, that is a hard drive. repeated for all parts that are in any given machine
+    
+    dictt = [i.to_dict() for i in HD]
+this reuses the dictt variable, but could be any name, it takes our HD (hard drive) list of objects made in the previous
+command, and itterates (for loop) though it and makes a python dictionary out of it useing the to_dict functions made in the
+models file. this is nessary to create the json package that will be sent to the front end.
+
+    dictt += [i.to_dict() for i in MB]
+this does the same as the above command, except its using the += operator, as we want to add to that dictionary so we can
+send just ONE json package with the information, instead of using a system that requires repeated looped calls from the 
+front end.
+
+    data = json.dumps(dictt)
+we take the dictionary that is the collection of all instances of objects made from the previous commands and we turn it
+into a json package.
+
+    return HttpResponse(data, status = 200)
+function return, an instance of object HttpResponce, using the json package we made and a status code (code 200 means OK)
+not much logic to return if an error occures, but it what is currently done in this program.
 '''
