@@ -95,6 +95,27 @@ class Equipment(models.Model):
     location = models.TextField(blank = True, null = True)
 
     def to_dict(self):
+        HD = self.hard_drive_set.all()
+        HDD = [i.list_view() for i in HD]
+        MB = self.motherboard_set.all()
+        MBD = [i.list_view() for i in MB]
+        CP = self.central_processing_unit_set.all()
+        CPD = [i.list_view() for i in CP]
+        PS = self.power_supply_unit_set.all()
+        PSD = [i.list_view() for i in PS]
+        OD = self.optical_drive_set.all()
+        ODD = [i.list_view() for i in OD]
+        RM = self.ram_set.all()
+        RMD = [i.list_view() for i in RM]
+        OS = self.operating_system_set.all()
+        OSD = [i.list_view() for i in OS]
+        FM = self.flash_memory_set.all()
+        FMD = [i.list_view() for i in FM]
+        SC = self.service_contract_set.all()
+        SCD = [i.list_view() for i in SC]
+        EC = self.expansion_card_set.all()
+        ECD = [i.list_view() for i in EC]
+        
         return {
             'id' : self.id,
             'acquisition_date' : unicode(self.acquisition_date),
@@ -102,6 +123,16 @@ class Equipment(models.Model):
             'machine_name' : unicode(self.machine_name),
             'in_use' : self.in_use,
             'location' : unicode(self.location),
+            'Hard_drive' : HDD, #this is the line to look at for getting the list in the list
+            'Motherboard' : MBD,
+            'Central_processing_unit' : CPD,
+            'Power_supply_unit' : PSD,
+            'Optical_drive_set' : ODD,
+            'RAM' : RMD,
+            'Operating_system' : OSD,
+            'Flash_memory' : FMD,
+            'Service_contract' : SCD,
+            'Expansion_card' : ECD,
         }
     
     def __unicode__(self):
@@ -150,6 +181,12 @@ class Hard_drive(models.Model):
             'location' : self.location.part_view(),
         }
     
+    def list_view(self):
+        return {
+            'total_GB' : self.total_GB,
+            'model' : self.model.to_dict(),
+        }
+        
     def __unicode__(self):
         return unicode(self.model)
 
@@ -162,6 +199,11 @@ class Motherboard(models.Model):
             'id' : self.id,
             'model' : self.model.to_dict(),
             'location' : self.location.part_view(),
+        }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
         }
     
     def __unicode__(self):
@@ -177,6 +219,11 @@ class Central_processing_unit(models.Model):
             'model' : self.model.to_dict(),
             'location' : self.location.part_view(),
         }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -191,6 +238,11 @@ class Power_supply_unit(models.Model):
             'model' : self.model.to_dict(),
             'location' : self.location.part_view(),
         }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -204,6 +256,11 @@ class Optical_drive(models.Model):
             'id' : self.id,
             'model' : self.model.to_dict(),
             'location' : self.location.part_view(),
+        }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
         }
     
     def __unicode__(self):
@@ -222,6 +279,12 @@ class RAM(models.Model):
             'size_in_gigs' : self.size_in_gigs,
             'location' : self.location.part_view(),
         }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
+            'size_in_gigs' : self.size_in_gigs,
+        }
     
     def __unicode__(self):
         return unicode(self.model)
@@ -235,6 +298,11 @@ class Operating_system(models.Model):
             'id' : self.id,
             'model' : self.model.to_dict(),
             'location' : self.location.part_view(),
+        }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
         }
     
     def __unicode__(self):
@@ -251,6 +319,12 @@ class Flash_memory(models.Model):
             'model' : self.model.to_dict(),
             'size_in_megs' : self.size_in_megs,
             'location' : self.location.part_view(),
+        }
+        
+    def list_view(self):
+        return {
+            'model' : self.model.to_dict(),
+            'size_in_megs' : self.size_in_megs,
         }
     
     def __unicode__(self):
@@ -270,6 +344,13 @@ class Service_contract(models.Model):
             'expire_date' : unicode(self.expire_date),
             'additional_notes' : self.additional_notes,
         }
+        
+    def list_view(self):
+        return {
+            'name' : self.name,
+            'expire_date' : unicode(self.expire_date),
+            'additional_notes' : self.additional_notes,
+        }
     
     def __unicode__(self):
         unicode(self.name)
@@ -283,6 +364,11 @@ class Expansion_card(models.Model):
             'id' : self.id,
             'description' : self.description,
             'location' : self.location.part_view(),
+        }
+        
+    def list_view(self):
+        return {
+            'description' : self.description,
         }
 
     def __unicode__(self):

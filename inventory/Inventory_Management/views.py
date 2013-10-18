@@ -421,32 +421,64 @@ def VAll(request):
 '''
 #----------------------------------------------------Start of actual code-----------------------------------
 #line by line explination of the views are at the bottom of the document
-def VComputer(request):
-    dictt = models.Computer.objects.all()[0]
-    HD = dictt.hard_drive_set.all()
-    MB = dictt.motherboard_set.all()
-    CPU = dictt.central_processing_unit_set.all()
-    PSU = dictt.power_supply_unit_set.all()
-    OD = dictt.optical_drive_set.all()
-    RAM = dictt.ram_set.all()
-    OS = dictt.operating_system_set.all()
-    FM = dictt.flash_memory_set.all()
-    SC = dictt.service_contract_set.all()
-    EC = dictt.expansion_card_set.all()
-    
-    dictt = [i.to_dict() for i in HD]
-    dictt += [i.to_dict() for i in MB]
-    dictt += [i.to_dict() for i in CPU]
-    dictt += [i.to_dict() for i in PSU]
-    dictt += [i.to_dict() for i in OD]
-    dictt += [i.to_dict() for i in RAM]
-    dictt += [i.to_dict() for i in OS]
-    dictt += [i.to_dict() for i in FM]
-    dictt += [i.to_dict() for i in SC]
-    dictt += [i.to_dict() for i in EC]
+def VEquipment(request): #models.Computer.objects.count()
+    temp = models.Equipment.objects.all()
+    dictt = [i.to_dict() for i in temp]
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 
+def VComputer(request): #models.Computer.objects.count()
+    temp = models.Computer.objects.all()
+    dictt = [i.to_dict() for i in temp]
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VRouter(request): #models.Computer.objects.count()
+    temp = models.Router.objects.all()
+    dictt = [i.to_dict() for i in temp]
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VSwitch(request): #models.Computer.objects.count()
+    temp = models.Switch.objects.all()
+    dictt = [i.to_dict() for i in temp]
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VFirewall(request): #models.Computer.objects.count()
+    temp = models.Firewall.objects.all()
+    dictt = [i.to_dict() for i in temp]
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+
+def VServer(request): #models.Computer.objects.count()
+    temp = models.Server.objects.all()
+    dictt = [i.to_dict() for i in temp]
+    data = json.dumps(dictt)
+    return HttpResponse(data, status = 200)
+'''        
+        HD = dictt.hard_drive_set.all()
+        MB = dictt.motherboard_set.all()
+        CPU = dictt.central_processing_unit_set.all()
+        PSU = dictt.power_supply_unit_set.all()
+        OD = dictt.optical_drive_set.all()
+        RAM = dictt.ram_set.all()
+        OS = dictt.operating_system_set.all()
+        FM = dictt.flash_memory_set.all()
+        SC = dictt.service_contract_set.all()
+        EC = dictt.expansion_card_set.all()
+    
+        dictt = [i.to_dict() for i in HD]
+        dictt += [i.to_dict() for i in MB]
+        dictt += [i.to_dict() for i in CPU]
+        dictt += [i.to_dict() for i in PSU]
+        dictt += [i.to_dict() for i in OD]
+        dictt += [i.to_dict() for i in RAM]
+        dictt += [i.to_dict() for i in OS]
+        dictt += [i.to_dict() for i in FM]
+        dictt += [i.to_dict() for i in SC]
+        dictt += [i.to_dict() for i in EC]
+'''
 def VHard_drive(request):
     dictt = models.Hard_drive.objects.all()
     dictt = [i.to_dict() for i in dictt]

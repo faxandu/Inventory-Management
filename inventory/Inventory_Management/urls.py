@@ -74,7 +74,12 @@ urlpatterns = patterns('',
 '''
 
 urlpatterns = patterns('',
+       url(r'^all/Equipment', views.VEquipment),
        url(r'^all/Computer', views.VComputer),
+       url(r'^all/Router', views.VRouter),
+       url(r'^all/Switch', views.VSwitch),
+       url(r'^all/Firewall', views.VFirewall),
+       url(r'^all/Server', views.VServer),
        
        url(r'^all/Hard_drive', views.VHard_drive),
        url(r'^all/Motherboard', views.VMotherboard),
