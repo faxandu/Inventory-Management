@@ -19,13 +19,13 @@ from django.db import models
 import datetime
 
 '''
-support/suplemental tables
+support/suplemental table(s)
 
 the following are support/suplemental fields, things that are consistant over many parts, but don't need to be
 reiterated over and over in diffrent tables, so are set in there own tables to save space and reduce user error
 '''
 
-#this object is used for the Modelnum table as the source for the choices in stype
+#this object is used for the Modelnum table as the source for the choices in model_type field.
 model_type = (
     ('HD','Hard_drive'),
     ('MB','Mother_board'),
@@ -48,32 +48,6 @@ class Modelnum(models.Model):
             'name': self.model_number,
         }
 
-#class Memory_type(models.model):
-#    name = models.CharField(max_length = 25, unique = True)
-
-#class Manufacturer(models.Model):
-#    name = models.CharField(max_length = 25, unique = True)
-
-''' removed to reduce table useage
-class Hard_drive_model(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-
-class Mother_board_model(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-
-class Operating_system_name(models.model):
-    name = models.CharField(max_length = 25, unique = True)
-
-class CPU_model(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-
-class Flash_type(models.Model):
-    name = models.CharField(max_length = 25, unique = True)
-
-class Optical_drive_model(models.Model)
-    name = models.CharField(max_length = 25, unique = True)
-'''
-
 '''
 main/anchor tables
 
@@ -82,8 +56,7 @@ Equipment is anything that can have parts attached to it, such as comptuers or s
 by having them all inherit from a core type, it makes API calls for all machines we have simple as we only call one table
 it also makes it so we can point to anything that inherits from it, which also simplifies the database so we don't need 
 something like "server hdd, computer hdd" for every type.
-still inherits from the core type, so it can be pointed to by the other fields. as it's name implies, its for unused parts. 
-so the user may enter in a breif description of where its at. (ie, james took it home for testing, its in bill cabinate, etc)
+ie: as all inherit from the core type, so it can be pointed to by the other fields.
 '''
 
 class Equipment(models.Model):
@@ -158,11 +131,10 @@ class Server(Equipment): pass
 '''
 the following is what is attached to the object above, they point "upwards" to what they are attached to
 more spificaly, they will contain 3 diffrent things at most: common datafields that are unique to indivual parts,
+such as total_GB for hard drives, or expire_date in service contract
 datafields that tend to repeate themselves(the foreignkey fields that are not to equipment) such as OS names,
 CPU socket types, stuff that we will want to add on to in the future, but not change once implemented. then the
 field that links to something of type equipment, which represents a full machine that it is attached to.
-likewise,
-pending -- having them all inherit from a common type makes for an easy API call
 '''
 
 #acquisition_date = models.DateField()
