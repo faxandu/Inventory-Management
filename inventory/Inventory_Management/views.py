@@ -130,14 +130,13 @@ class Equipment(models.Model):
 #-------------------------------------machine sets-------------------------------------------------------
 @csrf_exempt
 def Set_Computer(request):
-    post = request.POST
     package = models.Computer()
     try:
-        package.acquisition_date = post.acquisition_date
+        package.acquisition_date = request.POST['date']
     except:
         package.acquisition_date = "1111-11-11"
     try:
-        package.IS = post.IS
+        package.IS = request.POST['IS']
     except:
         package.IS = ""
     try:
@@ -145,60 +144,133 @@ def Set_Computer(request):
     except:
         package.machine_name = ""
     try:
-        package.in_use = post.in_use
+        package.in_use = request.POST['in_use']
     except:
         package.in_use = True
     try:
         package.location = request.POST['location']
     except:
         package.location = ""
-    package.save()
+    try:
+        package.save()
+    except:
+        return HttpResponse("there was an error in the package", status=400)
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
-#@csrf_exempt
-
+@csrf_exempt
 def Set_Router(request):
-    post = request.POST
-    package = models.Router()
-    package.acquisition_date = post.acquisition_date
-    package.IS = post.IS
-    package.machine_name = post.machine_name
-    package.in_use = post.in_use
-    package.location = post.location
-    package.save()
+    package = models.Computer()
+    try:
+        package.acquisition_date = request.POST['date']
+    except:
+        package.acquisition_date = "1111-11-11"
+    try:
+        package.IS = request.POST['IS']
+    except:
+        package.IS = ""
+    try:
+        package.machine_name = request.POST['machine_name']
+    except:
+        package.machine_name = ""
+    try:
+        package.in_use = request.POST['in_use']
+    except:
+        package.in_use = True
+    try:
+        package.location = request.POST['location']
+    except:
+        package.location = ""
+    try:
+        package.save()
+    except:
+        return HttpResponse("there was an error in the package", status=400)
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Switch(request):
-    post = request.POST
-    package = models.Switch()
-    package.acquisition_date = post.acquisition_date
-    package.IS = post.IS
-    package.machine_name = post.machine_name
-    package.in_use = post.in_use
-    package.location = post.location
-    package.save()
+    package = models.Computer()
+    try:
+        package.acquisition_date = request.POST['date']
+    except:
+        package.acquisition_date = "1111-11-11"
+    try:
+        package.IS = request.POST['IS']
+    except:
+        package.IS = ""
+    try:
+        package.machine_name = request.POST['machine_name']
+    except:
+        package.machine_name = ""
+    try:
+        package.in_use = request.POST['in_use']
+    except:
+        package.in_use = True
+    try:
+        package.location = request.POST['location']
+    except:
+        package.location = ""
+    try:
+        package.save()
+    except:
+        return HttpResponse("there was an error in the package", status=400)
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Firewall(request):
-    post = request.POST
-    package = models.Firewall()
-    package.acquisition_date = post.acquisition_date
-    package.IS = post.IS
-    package.machine_name = post.machine_name
-    package.in_use = post.in_use
-    package.location = post.location
-    package.save()
+    package = models.Computer()
+    try:
+        package.acquisition_date = request.POST['date']
+    except:
+        package.acquisition_date = "1111-11-11"
+    try:
+        package.IS = request.POST['IS']
+    except:
+        package.IS = ""
+    try:
+        package.machine_name = request.POST['machine_name']
+    except:
+        package.machine_name = ""
+    try:
+        package.in_use = request.POST['in_use']
+    except:
+        package.in_use = True
+    try:
+        package.location = request.POST['location']
+    except:
+        package.location = ""
+    try:
+        package.save()
+    except:
+        return HttpResponse("there was an error in the package", status=400)
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Server(request):
-    post = request.POST
-    package = models.Server()
-    package.acquisition_date = post.acquisition_date
-    package.IS = post.IS
-    package.machine_name = post.machine_name
-    package.in_use = post.in_use
-    package.location = post.location
-    package.save()
+    package = models.Computer()
+    try:
+        package.acquisition_date = request.POST['date']
+    except:
+        package.acquisition_date = "1111-11-11"
+    try:
+        package.IS = request.POST['IS']
+    except:
+        package.IS = ""
+    try:
+        package.machine_name = request.POST['machine_name']
+    except:
+        package.machine_name = ""
+    try:
+        package.in_use = request.POST['in_use']
+    except:
+        package.in_use = True
+    try:
+        package.location = request.POST['location']
+    except:
+        package.location = ""
+    try:
+        package.save()
+    except:
+        return HttpResponse("there was an error in the package", status=400)
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 #-------------------------------------------part sets-------------------------------------------------------
@@ -210,18 +282,18 @@ def Set_model(num, model_type):
 
 @csrf_exempt
 def Set_Hard_drive(request):
-    post = request.POST
     package = models.Hard_drive()
-    package.total_GB = post.total_GB
+    package.total_GB = request.POST['total_GB']
     temp = models.Modelnum.objects.all()
     if temp.filter(model_number=post.model_number).exist():
-        package.model = models.Modelnum.objects.get(model_number=post.model_number)
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model_number'])
     else:
         Set_model(post.model, "HD")
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model_number'])
+    if isinstance(request.POST['location'], int):
+        package.location = models.Equipment.objects.get(id=request.POST['location'])
     elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+        package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
     else:
         return HttpResponse('Error, Location Invalid', status = 406)
         
