@@ -141,7 +141,7 @@ def Set_Computer(request):
     else:
         package.IS = ""
     if 'post.machine_name' in locals():
-        package.machine_name = post.machine_name
+        package.machine_name = post["machine_name"]
     else:
         package.machine_name = ""
     if 'post.in_use' in locals():
@@ -149,7 +149,7 @@ def Set_Computer(request):
     else:
         package.in_use = True
     if 'post.location' in locals():
-        package.location = post.location
+        package.location = post["location"]
     else:
         package.location = ""
     package.save()
