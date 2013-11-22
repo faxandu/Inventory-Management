@@ -135,23 +135,23 @@ def Set_Computer(request):
     if 'post.acquisition_date' in locals():
         package.acquisition_date = post.acquisition_date
     else:
-        package.acquisition_date = None
+        package.acquisition_date = ""
     if 'post.IS' in locals():
         package.IS = post.IS
     else:
-        package.IS = None
+        package.IS = ""
     if 'post.machine_name' in locals():
         package.machine_name = post.machine_name
     else:
-        package.machine_name = None
+        package.machine_name = ""
     if 'post.in_use' in locals():
         package.in_use = post.in_use
     else:
-        package.in_use = None
+        package.in_use = True
     if 'post.location' in locals():
         package.location = post.location
     else:
-        package.location = None
+        package.location = ""
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
