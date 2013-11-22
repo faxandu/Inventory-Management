@@ -128,6 +128,7 @@ class Equipment(models.Model):
     location = models.TextField(blank = True, null = True)
 '''
 #-------------------------------------machine sets-------------------------------------------------------
+@csrf_exempt
 def Set_Computer(request):
     post = request.POST
     package = models.Computer()
@@ -138,6 +139,8 @@ def Set_Computer(request):
     package.location = post.location
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
+
+#@csrf_exempt
 
 def Set_Router(request):
     post = request.POST
@@ -184,13 +187,22 @@ def Set_Server(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 #-------------------------------------------part sets-------------------------------------------------------
+def Set_model(num, model_type):
+    temp=models.Modelnum()
+    temp.model_number = num
+    temp.model_type = model_type
+    temp.save()
 
+@csrf_exempt
 def Set_Hard_drive(request):
     post = request.POST
     package = models.Hard_drive()
     package.total_GB = post.total_GB
-    package.model = models.Modelnum.objects.get(model_number=post.model)
-    
+    temp = models.Modelnum.objects.all()
+    if temp.filter(model_number=post.model_number).exist():
+        package.model = models.Modelnum.objects.get(model_number=post.model_number)
+    else:
+        Set_model(post.model, "HD")
     if isinstance(post.location, int):
         package.location = models.Equipment.objects.get(id=post.location)
     elif isinstance(post.location, str):
@@ -204,6 +216,7 @@ def Set_Hard_drive(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Motherboard(request):
     post = request.POST
     package = models.Motherboard()
@@ -369,72 +382,72 @@ def Set_Expansion_card(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 
-'''
-    obj = models.Hard_drive.objects.all()[0]
-    obj = model_to_dict(obj)
-    obj = json.dumps(obj)
-    return HttpResponse(obj, status = 200)
-'''
-'''    
-def VFirewall(request):
-    dictt = models.Firewall.objects.all()
-    dictt = [i.to_dict() for i in dictt]
-    #data = {'Success':json.dumps(dictt)}
-    data = json.dumps(dictt)
-    return HttpResponse(data, status = 200)
-    
------calls to change database-----
-not yet implemented.
-    building = models.CharField(max_length=2)
-    room = models.CharField(max_length=4)
-'''
-'''----------------------this is just a working example of saving to the database on the old database------------
-#note, when makeing test, you just make a dictionary of dummy information, then save, then call.
-#@csrf_exempt
-#@require_http_methods(['POST'])
-def Set_Location(request):
-    post = request.POST
-    package = models.Location()
-    package.building = 'ne' #post.building
-    package.room = '400' #post.room
-    
-    package.save()
-    data = {'data': 'Request Created'}
-    code = 201
-    return HttpResponse(simplejson.dumps(package.to_dict()), status=code)
-'''
-
 '''------------------------------------Explination of code--------------------------------------------------
------the following explains what is used for full indivual machine calls
+-----calls to view database
+
 def VComputer(request):
-    dictt = models.Computer.objects.all()[0]
-dictt is first used here to grab an instance of a computer system from the database. we set it to be from the file
-models, the table Computer, then look at all the objects in the table then grab one based on its id
-
-    HD = dictt.hard_drive_set.all()
-this line is repeated for all possible objects (with unique variable names) that are parts attached to a machine, here, 
-we have HD (short for hard drive) and set it to be an series of instances of all hard drives that are pointing to the 
-computer object w pulled. the exact function call/syntax here is [object].[forientable]_set.all(). broken down further, 
-object is any single object, that can/does have other tables in the database pointing to it (our computer system). then, 
-forientable is a DIFFRENT table that POINTS TO THE FIRST OBJECT, all lower case, underscore set. Django makes this function
-by default when you use a forien key in any table for reasons of back referenceing. the end result of this one is it grabs
-anything that is pointing to our given computer, that is a hard drive. repeated for all parts that are in any given machine
-    
-    dictt = [i.to_dict() for i in HD]
-this reuses the dictt variable, but could be any name, it takes our HD (hard drive) list of objects made in the previous
-command, and itterates (for loop) though it and makes a python dictionary out of it useing the to_dict functions made in the
-models file. this is nessary to create the json package that will be sent to the front end.
-
-    dictt += [i.to_dict() for i in MB]
-this does the same as the above command, except its using the += operator, as we want to add to that dictionary so we can
-send just ONE json package with the information, instead of using a system that requires repeated looped calls from the 
-front end.
-
+--define function called VCompter, take in an instance of a HTML request
+    temp = models.Computer.objects.all()
+--make a temp variable as querry of the computer object, and have it return all instances of it
+    dictt = [i.to_dict() for i in temp]
+--if you look into the models file, there is a to_dict function for all tables(classes) this function
+--takes a SINGLE instance of the class and turns it into a python dictionary, which is needed for 
+--convertion to json pack which is what is sent to the front end.
     data = json.dumps(dictt)
-we take the dictionary that is the collection of all instances of objects made from the previous commands and we turn it
-into a json package.
-
+--we take that dictionary we made, and turn it into a json package. this is a default function from import json.
     return HttpResponse(data, status = 200)
-function return, an instance of object HttpResponce, using the json package we made and a status code (code 200 means OK)
-not much logic to return if an error occures, but it what is currently done in this program.
+--return an instance of HttpResponce, which djano uses, with the json package and a status code
+
+-----calls to add machines
+
+def Set_Computer(request):
+    post = request.POST
+--make the post information in another variable, this is only for convinence.
+    package = models.Computer()
+--package is set to be a blank instance of the computer field.
+    package.acquisition_date = post.acquisition_date
+--
+    package.IS = post.IS
+    package.machine_name = post.machine_name
+    package.in_use = post.in_use
+    package.location = post.location
+--all the package.thing = statements are filling out the the indivual fields of the object.
+    package.save()
+--saves the instance of the class to the databse
+    return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
+--just a return
+
+-----calls to add parts
+
+def Set_Hard_drive(request):
+    post = request.POST
+--same as above, for convience
+    package = models.Hard_drive()
+--same as above, sets a blank instance of the part
+    package.total_GB = post.total_GB
+--"basic" fields are just given
+    temp = models.Modelnum.objects.all()
+--for ease of front end use, we take an instance of all models in the database
+    if temp.filter(model_number=post.model_number).exist():
+        package.model = models.Modelnum.objects.get(model_number=post.model_number)
+--we check if that model exist in our database
+    else:
+        Set_model(post.model, "HD")
+--if it does not, we make one
+    if isinstance(post.location, int):
+        package.location = models.Equipment.objects.get(id=post.location)
+--if it's an intiger, then treat it like a primary key
+    elif isinstance(post.location, str):
+        package.location = models.Equipment.objects.get(machine_name=post.location)
+--if its a string, treat it like a model number
+    else:
+        return HttpResponse('Error, Location Invalid', status = 406)
+--if its not either, return an error
+
+    if package.model.model_type != 'HD':
+        return HttpResponse('Error, model type is not for a Hard Drive', status = 406)
+--check if its the right type of model, so we don't get drives labled as motherbored.
+    package.save()
+--save it to the database.
+    return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 '''
