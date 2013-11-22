@@ -285,7 +285,7 @@ def Set_Hard_drive(request):
     package = models.Hard_drive()
     package.total_GB = request.POST['total_GB']
     temp = models.Modelnum.objects.all()
-    if temp.filter(model_number=post.model_number).exist():
+    if temp.filter(model_number=request.POST['model_number']).exist():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model_number'])
     else:
         Set_model(post.model, "HD")
