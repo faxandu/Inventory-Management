@@ -132,25 +132,25 @@ class Equipment(models.Model):
 def Set_Computer(request):
     post = request.POST
     package = models.Computer()
-    if 'post.acquisition_date' in locals():
+    try:
         package.acquisition_date = post.acquisition_date
-    else:
+    except:
         package.acquisition_date = "1111-11-11"
-    if 'post.IS' in locals():
+    try:
         package.IS = post.IS
-    else:
+    except:
         package.IS = ""
-    if 'post.machine_name' in locals():
-        package.machine_name = post["machine_name"]
-    else:
+    try:
+        package.machine_name = request.POST['machine_name']
+    except:
         package.machine_name = ""
-    if 'post.in_use' in locals():
+    try:
         package.in_use = post.in_use
-    else:
+    except:
         package.in_use = True
-    if 'post.location' in locals():
-        package.location = post["location"]
-    else:
+    try:
+        package.location = request.POST['location']
+    except:
         package.location = ""
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
