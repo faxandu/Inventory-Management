@@ -135,7 +135,7 @@ def Set_Computer(request):
     if 'post.acquisition_date' in locals():
         package.acquisition_date = post.acquisition_date
     else:
-        package.acquisition_date = ""
+        package.acquisition_date = "1111-11-11"
     if 'post.IS' in locals():
         package.IS = post.IS
     else:
