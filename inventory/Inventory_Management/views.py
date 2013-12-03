@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from Inventory_Management import models
 from django.core import serializers
 import json
+import time
 #for auth
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -134,7 +135,7 @@ def Set_Computer(request):
     try:
         package.acquisition_date = request.POST['date']
     except:
-        package.acquisition_date = "1111-11-11"
+        package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
         package.IS = request.POST['IS']
     except:
@@ -163,7 +164,7 @@ def Set_Router(request):
     try:
         package.acquisition_date = request.POST['date']
     except:
-        package.acquisition_date = "1111-11-11"
+        package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
         package.IS = request.POST['IS']
     except:
@@ -192,7 +193,7 @@ def Set_Switch(request):
     try:
         package.acquisition_date = request.POST['date']
     except:
-        package.acquisition_date = "1111-11-11"
+        package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
         package.IS = request.POST['IS']
     except:
@@ -221,7 +222,7 @@ def Set_Firewall(request):
     try:
         package.acquisition_date = request.POST['date']
     except:
-        package.acquisition_date = "1111-11-11"
+        package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
         package.IS = request.POST['IS']
     except:
@@ -250,7 +251,7 @@ def Set_Server(request):
     try:
         package.acquisition_date = request.POST['date']
     except:
-        package.acquisition_date = "1111-11-11"
+        package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
         package.IS = request.POST['IS']
     except:
@@ -302,17 +303,21 @@ def Set_Hard_drive(request):
     
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
-
+    
 @csrf_exempt
 def Set_Motherboard(request):
-    post = request.POST
     package = models.Motherboard()
-    package.model = models.Modelnum.objects.get(model_number=post.model)
+    temp = models.Modelnum.objects.all()
+    if temp.filter(request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+    else:
+        Set_model(request.POST['model'], "MB")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if isinstance(request.POST['location'], int):
+        package.location = models.Equipment.objects.get(id=request.POST['location'])
+    elif isinstance(request.POST['location'], str):
+        package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
     else:
         return HttpResponse('Error, Location Invalid', status = 406)
         
@@ -487,22 +492,41 @@ def VComputer(request):
 
 -----calls to add machines
 
+@csrf_exempt
+--this is a decorator that is required
 def Set_Computer(request):
-    post = request.POST
---make the post information in another variable, this is only for convinence.
     package = models.Computer()
---package is set to be a blank instance of the computer field.
-    package.acquisition_date = post.acquisition_date
---
-    package.IS = post.IS
-    package.machine_name = post.machine_name
-    package.in_use = post.in_use
-    package.location = post.location
---all the package.thing = statements are filling out the the indivual fields of the object.
-    package.save()
---saves the instance of the class to the databse
+--make a new instance of computer
+--the following try excepts are just a way of testing if a variable exist, as if it dosen't it will error
+--we simply catch it and then do an assignment to a blank/relevent value for the field. if it does exist,
+--we then let the inital direct assignment go on though.
+    try:
+        package.acquisition_date = request.POST['date']
+    except:
+        package.acquisition_date = time.strftime('%Y-%m-%d')
+--the time.setftime is a formatted time string, that should be accepted by the database, its the current date
+    try:
+        package.IS = request.POST['IS']
+    except:
+        package.IS = ""
+    try:
+        package.machine_name = request.POST['machine_name']
+    except:
+        package.machine_name = ""
+    try:
+        package.in_use = request.POST['in_use']
+    except:
+        package.in_use = True
+    try:
+        package.location = request.POST['location']
+    except:
+        package.location = ""
+    try:
+        package.save()
+    except:
+        return HttpResponse("there was an error in the package", status=400)
+--if there's a problem saving, the we return an error.
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
---just a return
 
 -----calls to add parts
 
