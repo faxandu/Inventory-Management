@@ -291,12 +291,12 @@ def Set_Hard_drive(request):
     else:
         Set_model(request.POST['model'], "HD")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
-    if isinstance(request.POST['location'], int):
-        package.location = models.Equipment.objects.get(id=request.POST['location'])
-    elif isinstance(request.POST['location'], str):
-        package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
-    else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+    #if isinstance(request.POST['location'], int):
+    #    package.location = models.Equipment.objects.get(id=request.POST['location'])
+    #elif isinstance(request.POST['location'], str):
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    #else:
+    #    return HttpResponse('Error, Location Invalid', status = 406)
         
     if package.model.model_type != 'HD':
         return HttpResponse('Error, model type is not for a Hard Drive', status = 406)
