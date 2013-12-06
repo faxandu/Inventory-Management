@@ -96,7 +96,7 @@ class Equipment(models.Model):
             'machine_name' : unicode(self.machine_name),
             'in_use' : self.in_use,
             'location' : unicode(self.location),
-            'Hard_drive' : HDD, #this is the line to look at for getting the list in the list
+            'Hard_drive' : HDD, #this is a line to look at for getting the list in the list
             'Motherboard' : MBD,
             'Central_processing_unit' : CPD,
             'Power_supply_unit' : PSD,

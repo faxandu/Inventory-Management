@@ -293,7 +293,7 @@ def Set_Hard_drive(request):
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     if isinstance(request.POST['location'], int):
         package.location = models.Equipment.objects.get(id=request.POST['location'])
-    elif isinstance(post.location, str):
+    elif isinstance(request.POST['location'], str):
         package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
     else:
         return HttpResponse('Error, Location Invalid', status = 406)
