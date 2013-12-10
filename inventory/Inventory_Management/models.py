@@ -63,7 +63,7 @@ class Equipment(models.Model):
     acquisition_date = models.DateField(blank = True, null = True)
     #service_tag = models.CharField(max_length = 35, blank = True, null = True)
     IS = models.CharField(max_length = 35, blank = True, unique = False, null = True)
-    machine_name = models.CharField(max_length = 100, unique = False, blank = True, null = True)
+    machine_name = models.CharField(max_length = 100, unique = True, blank = False, null = False)
     in_use = models.BooleanField()
     location = models.TextField(blank = True, null = True)
 
@@ -325,7 +325,7 @@ class Service_contract(models.Model):
         }
     
     def __unicode__(self):
-        unicode(self.name)
+        return unicode(self.name)
 
 class Expansion_card(models.Model):
     description = models.TextField()

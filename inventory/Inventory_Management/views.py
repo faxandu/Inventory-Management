@@ -143,7 +143,7 @@ def Set_Computer(request):
     try:
         package.machine_name = request.POST['machine_name']
     except:
-        package.machine_name = ""
+        return HttpResponse("unique machine_name Required", status=400)
     try:
         package.in_use = request.POST['in_use']
     except:
@@ -172,7 +172,7 @@ def Set_Router(request):
     try:
         package.machine_name = request.POST['machine_name']
     except:
-        package.machine_name = ""
+        return HttpResponse("unique machine_name Required", status=400)
     try:
         package.in_use = request.POST['in_use']
     except:
@@ -201,7 +201,7 @@ def Set_Switch(request):
     try:
         package.machine_name = request.POST['machine_name']
     except:
-        package.machine_name = ""
+        return HttpResponse("unique machine_name Required", status=400)
     try:
         package.in_use = request.POST['in_use']
     except:
@@ -230,7 +230,7 @@ def Set_Firewall(request):
     try:
         package.machine_name = request.POST['machine_name']
     except:
-        package.machine_name = ""
+        return HttpResponse("unique machine_name Required", status=400)
     try:
         package.in_use = request.POST['in_use']
     except:
@@ -259,7 +259,7 @@ def Set_Server(request):
     try:
         package.machine_name = request.POST['machine_name']
     except:
-        package.machine_name = ""
+        return HttpResponse("unique machine_name Required", status=400)
     try:
         package.in_use = request.POST['in_use']
     except:
@@ -291,12 +291,8 @@ def Set_Hard_drive(request):
     else:
         Set_model(request.POST['model'], "HD")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
-    #if isinstance(request.POST['location'], int):
-    #    package.location = models.Equipment.objects.get(id=request.POST['location'])
-    #elif isinstance(request.POST['location'], str):
+        
     package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
-    #else:
-    #    return HttpResponse('Error, Location Invalid', status = 406)
         
     if package.model.model_type != 'HD':
         return HttpResponse('Error, model type is not for a Hard Drive', status = 406)
@@ -308,18 +304,13 @@ def Set_Hard_drive(request):
 def Set_Motherboard(request):
     package = models.Motherboard()
     temp = models.Modelnum.objects.all()
-    if temp.filter(request.POST['model']).exists():
+    if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
         Set_model(request.POST['model'], "MB")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
-    
-    if isinstance(request.POST['location'], int):
-        package.location = models.Equipment.objects.get(id=request.POST['location'])
-    elif isinstance(request.POST['location'], str):
-        package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
-    else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'MB':
         return HttpResponse('Error, model type is not for Motherboards', status = 406)
@@ -328,16 +319,15 @@ def Set_Motherboard(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_Central_processing_unit(request):
-    post = request.POST
     package = models.Central_processing_unit()
-    package.model = models.Modelnum.objects.get(model_number=post.model)
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "CP")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'CP':
         return HttpResponse('Error, model type is not for a CPU', status = 406)
@@ -347,16 +337,15 @@ def Set_Central_processing_unit(request):
 
 
 def Set_Power_supply_unit(request):
-    post = request.POST
     package = models.Power_supply_unit()
-    package.model = models.Modelnum.objects.get(model_number=post.model)
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "PS")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'PS':
         return HttpResponse('Error, model type is not for a Power Supply', status = 406)
@@ -365,16 +354,15 @@ def Set_Power_supply_unit(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_Optical_drive(request):
-    post = request.POST
     package = models.Optical_drive()
-    package.model = models.Modelnum.objects.get(model_number=post.model)
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "OD")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'OD':
         return HttpResponse('Error, model type is not for an Optical Drive', status = 406)
@@ -383,17 +371,16 @@ def Set_Optical_drive(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_RAM(request):
-    post = request.POST
     package = models.RAM()
-    package.size_in_gigs = post.size_in_gigs
-    package.model = models.Modelnum.objects.get(model_number=post.model)
+    package.size_in_gigs = request.POST.size_in_gigs
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "RM")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'RM':
         return HttpResponse('Error, model type is not for RAM', status = 406)
@@ -402,16 +389,15 @@ def Set_RAM(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_Operating_system(request):
-    post = request.POST
     package = models.Operating_system()
-    package.model = models.Modelnum.objects.get(model_number=post.model)
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "OS")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'OS':
         return HttpResponse('Error, model type is not for Operating Systems', status = 406)
@@ -420,17 +406,16 @@ def Set_Operating_system(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_Flash_memory(request):
-    post = request.POST
     package = models.Flash_memory()
-    package.size_in_megs = post.size_in_megs
-    package.model = models.Modelnum.objects.get(model_number=post.model)
+    package.size_in_megs = request.POST.size_in_megs
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "FM")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'FM':
         return HttpResponse('Error, model type is not for Flash Memory', status = 406)
@@ -439,18 +424,18 @@ def Set_Flash_memory(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_Service_contract(request):
-    post = request.POST
     package = models.Service_contract()
     package.expire_date = post.expire_date
     package.additional_notes = post.additional_notes
     package.model = models.Modelnum.objects.get(model_number=post.model)
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "HD")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'RM':
         return HttpResponse('Error, model type is not for RAM', status = 406)
@@ -459,16 +444,16 @@ def Set_Service_contract(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 def Set_Expansion_card(request):
-    post = request.POST
     package = models.Expansion_card()
-    package.description = post.description
+    package.description = request.POST.description
     
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+    if temp.filter(model_number=request.POST['model']).exists():
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
     else:
-        return HttpResponse('Error, Location Invalid', status = 406)
+        Set_model(request.POST['model'], "HD")
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        
+    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
     
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
