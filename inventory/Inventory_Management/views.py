@@ -160,7 +160,7 @@ def Set_Computer(request):
 
 @csrf_exempt
 def Set_Router(request):
-    package = models.Computer()
+    package = models.Router()
     try:
         package.acquisition_date = request.POST['acquisition_date']
     except:
@@ -189,7 +189,7 @@ def Set_Router(request):
 
 @csrf_exempt
 def Set_Switch(request):
-    package = models.Computer()
+    package = models.Switch()
     try:
         package.acquisition_date = request.POST['acquisition_date']
     except:
@@ -218,7 +218,7 @@ def Set_Switch(request):
 
 @csrf_exempt
 def Set_Firewall(request):
-    package = models.Computer()
+    package = models.Firewall()
     try:
         package.acquisition_date = request.POST['acquisition_date']
     except:
@@ -247,7 +247,7 @@ def Set_Firewall(request):
 
 @csrf_exempt
 def Set_Server(request):
-    package = models.Computer()
+    package = models.Server()
     try:
         package.acquisition_date = request.POST['acquisition_date']
     except:
