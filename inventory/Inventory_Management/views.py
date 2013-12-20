@@ -133,7 +133,7 @@ class Equipment(models.Model):
 def Set_Computer(request):
     package = models.Computer()
     try:
-        package.acquisition_date = request.POST['date']
+        package.acquisition_date = request.POST['acquisition_date']
     except:
         package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
@@ -162,7 +162,7 @@ def Set_Computer(request):
 def Set_Router(request):
     package = models.Computer()
     try:
-        package.acquisition_date = request.POST['date']
+        package.acquisition_date = request.POST['acquisition_date']
     except:
         package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
@@ -191,7 +191,7 @@ def Set_Router(request):
 def Set_Switch(request):
     package = models.Computer()
     try:
-        package.acquisition_date = request.POST['date']
+        package.acquisition_date = request.POST['acquisition_date']
     except:
         package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
@@ -220,7 +220,7 @@ def Set_Switch(request):
 def Set_Firewall(request):
     package = models.Computer()
     try:
-        package.acquisition_date = request.POST['date']
+        package.acquisition_date = request.POST['acquisition_date']
     except:
         package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
@@ -249,7 +249,7 @@ def Set_Firewall(request):
 def Set_Server(request):
     package = models.Computer()
     try:
-        package.acquisition_date = request.POST['date']
+        package.acquisition_date = request.POST['acquisition_date']
     except:
         package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
@@ -320,6 +320,7 @@ def Set_Motherboard(request):
 
 def Set_Central_processing_unit(request):
     package = models.Central_processing_unit()
+    temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
@@ -338,6 +339,7 @@ def Set_Central_processing_unit(request):
 
 def Set_Power_supply_unit(request):
     package = models.Power_supply_unit()
+    temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
@@ -355,6 +357,7 @@ def Set_Power_supply_unit(request):
 
 def Set_Optical_drive(request):
     package = models.Optical_drive()
+    temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
@@ -373,6 +376,7 @@ def Set_Optical_drive(request):
 def Set_RAM(request):
     package = models.RAM()
     package.size_in_gigs = request.POST.size_in_gigs
+    temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
@@ -390,6 +394,7 @@ def Set_RAM(request):
 
 def Set_Operating_system(request):
     package = models.Operating_system()
+    temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
@@ -400,7 +405,7 @@ def Set_Operating_system(request):
     package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
         
     if package.model.model_type != 'OS':
-        return HttpResponse('Error, model type is not for Operating Systems', status = 406)
+        return HttpResponse('Invalid Operating System', status = 406)
     
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
@@ -408,6 +413,7 @@ def Set_Operating_system(request):
 def Set_Flash_memory(request):
     package = models.Flash_memory()
     package.size_in_megs = request.POST.size_in_megs
+    temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
@@ -427,18 +433,6 @@ def Set_Service_contract(request):
     package = models.Service_contract()
     package.expire_date = post.expire_date
     package.additional_notes = post.additional_notes
-    package.model = models.Modelnum.objects.get(model_number=post.model)
-    
-    if temp.filter(model_number=request.POST['model']).exists():
-        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
-    else:
-        Set_model(request.POST['model'], "HD")
-        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
-        
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
-        
-    if package.model.model_type != 'RM':
-        return HttpResponse('Error, model type is not for RAM', status = 406)
     
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
@@ -446,19 +440,23 @@ def Set_Service_contract(request):
 def Set_Expansion_card(request):
     package = models.Expansion_card()
     package.description = request.POST.description
-    
-    if temp.filter(model_number=request.POST['model']).exists():
-        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
-    else:
-        Set_model(request.POST['model'], "HD")
-        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
     package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
     
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+#---------------------------------------Deleting machines--------------------------------
 
+def Del_Equipment(request):
+    temp = models.Equipment.objects.all()
+    if temp.filter(machine_name=request.POST['machine_name']).exists():
+        killme = models.Equipment.objects.filter(machine_name=request.POST['machine_name'])
+        killme.delete()
+        return HttpResponse("Entry Deleted", status=200)
+    else:
+        return HttpResponse("error locating record", status=304)
+        
 '''------------------------------------Explination of code--------------------------------------------------
 -----calls to view database
 
