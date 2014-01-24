@@ -102,7 +102,7 @@ def VOperating_system(request):
     return HttpResponse(data, status = 200)
 
 def VFlash_memory(request):
-    dictt = models.Flash_Memory.objects.all()
+    dictt = models.Flash_memory.objects.all()
     dictt = [i.to_dict() for i in dictt]
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
@@ -132,10 +132,10 @@ class Equipment(models.Model):
 @csrf_exempt
 def Set_Computer(request):
     package = models.Computer()
-    try:
-        package.acquisition_date = request.POST['acquisition_date']
-    except:
-        package.acquisition_date = time.strftime('%Y-%m-%d')
+#    try:
+#        package.acquisition_date = request.POST['acquisition_date']
+#    except:
+    package.acquisition_date = time.strftime('%Y-%m-%d')
     try:
         package.IS = request.POST['IS']
     except:
@@ -318,6 +318,7 @@ def Set_Motherboard(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Central_processing_unit(request):
     package = models.Central_processing_unit()
     temp = models.Modelnum.objects.all()
@@ -336,7 +337,7 @@ def Set_Central_processing_unit(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
-
+@csrf_exempt
 def Set_Power_supply_unit(request):
     package = models.Power_supply_unit()
     temp = models.Modelnum.objects.all()
@@ -355,6 +356,7 @@ def Set_Power_supply_unit(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Optical_drive(request):
     package = models.Optical_drive()
     temp = models.Modelnum.objects.all()
@@ -373,6 +375,7 @@ def Set_Optical_drive(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_RAM(request):
     package = models.RAM()
     package.size_in_gigs = request.POST.size_in_gigs
@@ -392,6 +395,7 @@ def Set_RAM(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Operating_system(request):
     package = models.Operating_system()
     temp = models.Modelnum.objects.all()
@@ -410,6 +414,7 @@ def Set_Operating_system(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Flash_memory(request):
     package = models.Flash_memory()
     package.size_in_megs = request.POST.size_in_megs
@@ -429,6 +434,7 @@ def Set_Flash_memory(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Service_contract(request):
     package = models.Service_contract()
     package.expire_date = post.expire_date
@@ -437,6 +443,7 @@ def Set_Service_contract(request):
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
+@csrf_exempt
 def Set_Expansion_card(request):
     package = models.Expansion_card()
     package.description = request.POST.description
