@@ -142,7 +142,7 @@ def Set_Computer(request):
     package.machine_name = request.POST['machine_name']
     if request.POST['in_use'] == "false":
         package.in_use = False
-    else:request.POST['in_use'] == "true":
+    else:
         package.in_use = True
             
     package.location = request.POST['location']
