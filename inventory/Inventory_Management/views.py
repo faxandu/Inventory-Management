@@ -140,7 +140,11 @@ def Set_Computer(request):
     package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
     package.machine_name = request.POST['machine_name']
-    package.in_use = True
+    if request.POST['in_use'] == "false":
+        package.in_use = False
+    else:request.POST['in_use'] == "true":
+        package.in_use = True
+            
     package.location = request.POST['location']
     try:
         package.save()
