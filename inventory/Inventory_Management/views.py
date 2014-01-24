@@ -155,26 +155,20 @@ def Set_Computer(request):
 @csrf_exempt
 def Set_Router(request):
     package = models.Router()
-    try:
-        package.acquisition_date = request.POST['acquisition_date']
-    except:
+    if request.POST['acquisition_date'] == "":
         package.acquisition_date = time.strftime('%Y-%m-%d')
-    try:
-        package.IS = request.POST['IS']
-    except:
-        package.IS = ""
-    try:
-        package.machine_name = request.POST['machine_name']
-    except:
-        return HttpResponse("unique machine_name Required", status=400)
-    try:
-        package.in_use = request.POST['in_use']
-    except:
+    else:
+        package.acquisition_date = request.POST['acquisition_date']
+
+    package.acquisition_date = time.strftime('%Y-%m-%d')
+    package.IS = request.POST['IS']
+    package.machine_name = request.POST['machine_name']
+    if request.POST['in_use'] == "false":
+        package.in_use = False
+    else:
         package.in_use = True
-    try:
-        package.location = request.POST['location']
-    except:
-        package.location = ""
+            
+    package.location = request.POST['location']
     try:
         package.save()
     except:
@@ -184,26 +178,20 @@ def Set_Router(request):
 @csrf_exempt
 def Set_Switch(request):
     package = models.Switch()
-    try:
-        package.acquisition_date = request.POST['acquisition_date']
-    except:
+    if request.POST['acquisition_date'] == "":
         package.acquisition_date = time.strftime('%Y-%m-%d')
-    try:
-        package.IS = request.POST['IS']
-    except:
-        package.IS = ""
-    try:
-        package.machine_name = request.POST['machine_name']
-    except:
-        return HttpResponse("unique machine_name Required", status=400)
-    try:
-        package.in_use = request.POST['in_use']
-    except:
+    else:
+        package.acquisition_date = request.POST['acquisition_date']
+
+    package.acquisition_date = time.strftime('%Y-%m-%d')
+    package.IS = request.POST['IS']
+    package.machine_name = request.POST['machine_name']
+    if request.POST['in_use'] == "false":
+        package.in_use = False
+    else:
         package.in_use = True
-    try:
-        package.location = request.POST['location']
-    except:
-        package.location = ""
+            
+    package.location = request.POST['location']
     try:
         package.save()
     except:
@@ -213,26 +201,20 @@ def Set_Switch(request):
 @csrf_exempt
 def Set_Firewall(request):
     package = models.Firewall()
-    try:
-        package.acquisition_date = request.POST['acquisition_date']
-    except:
+    if request.POST['acquisition_date'] == "":
         package.acquisition_date = time.strftime('%Y-%m-%d')
-    try:
-        package.IS = request.POST['IS']
-    except:
-        package.IS = ""
-    try:
-        package.machine_name = request.POST['machine_name']
-    except:
-        return HttpResponse("unique machine_name Required", status=400)
-    try:
-        package.in_use = request.POST['in_use']
-    except:
+    else:
+        package.acquisition_date = request.POST['acquisition_date']
+
+    package.acquisition_date = time.strftime('%Y-%m-%d')
+    package.IS = request.POST['IS']
+    package.machine_name = request.POST['machine_name']
+    if request.POST['in_use'] == "false":
+        package.in_use = False
+    else:
         package.in_use = True
-    try:
-        package.location = request.POST['location']
-    except:
-        package.location = ""
+            
+    package.location = request.POST['location']
     try:
         package.save()
     except:
@@ -242,26 +224,20 @@ def Set_Firewall(request):
 @csrf_exempt
 def Set_Server(request):
     package = models.Server()
-    try:
-        package.acquisition_date = request.POST['acquisition_date']
-    except:
+    if request.POST['acquisition_date'] == "":
         package.acquisition_date = time.strftime('%Y-%m-%d')
-    try:
-        package.IS = request.POST['IS']
-    except:
-        package.IS = ""
-    try:
-        package.machine_name = request.POST['machine_name']
-    except:
-        return HttpResponse("unique machine_name Required", status=400)
-    try:
-        package.in_use = request.POST['in_use']
-    except:
+    else:
+        package.acquisition_date = request.POST['acquisition_date']
+
+    package.acquisition_date = time.strftime('%Y-%m-%d')
+    package.IS = request.POST['IS']
+    package.machine_name = request.POST['machine_name']
+    if request.POST['in_use'] == "false":
+        package.in_use = False
+    else:
         package.in_use = True
-    try:
-        package.location = request.POST['location']
-    except:
-        package.location = ""
+            
+    package.location = request.POST['location']
     try:
         package.save()
     except:
