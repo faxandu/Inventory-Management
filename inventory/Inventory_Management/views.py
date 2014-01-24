@@ -132,26 +132,16 @@ class Equipment(models.Model):
 @csrf_exempt
 def Set_Computer(request):
     package = models.Computer()
-#    try:
-#        package.acquisition_date = request.POST['acquisition_date']
-#    except:
+    if request.POST['acquisition_date'] == "":
+        package.acquisition_date = time.strftime('%Y-%m-%d')
+    else:
+        package.acquisition_date = request.POST['acquisition_date']
+
     package.acquisition_date = time.strftime('%Y-%m-%d')
-    try:
-        package.IS = request.POST['IS']
-    except:
-        package.IS = ""
-    try:
-        package.machine_name = request.POST['machine_name']
-    except:
-        return HttpResponse("unique machine_name Required", status=400)
-    try:
-        package.in_use = request.POST['in_use']
-    except:
-        package.in_use = True
-    try:
-        package.location = request.POST['location']
-    except:
-        package.location = ""
+    package.IS = request.POST['IS']
+    package.machine_name = request.POST['machine_name']
+    package.in_use = True
+    package.location = request.POST['location']
     try:
         package.save()
     except:
