@@ -378,7 +378,7 @@ def Set_Optical_drive(request):
 @csrf_exempt
 def Set_RAM(request):
     package = models.RAM()
-    package.size_in_gigs = request.POST.['size_in_gigs']
+    package.size_in_gigs = request.POST['size_in_gigs']
     temp = models.Modelnum.objects.all()
     
     if temp.filter(model_number=request.POST['model']).exists():
