@@ -39,6 +39,6 @@ urlpatterns = patterns('',
        url(r'^set/Operating_system', views.Set_Operating_system),
        url(r'^set/Flash_memory', views.Set_Flash_memory),
        url(r'^set/Service_contract', views.Set_Service_contract),
-       url(r'^set/Expansion_card', views.Set_Expansion_card),
+       url(r'^set/Additional_features', views.Set_Additional_features),
        url(r'^del/machine', views.Del_Equipment),
 )

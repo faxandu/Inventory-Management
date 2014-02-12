@@ -119,12 +119,12 @@ def VExpansion_card(request):
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 #--------------------------------------Start of code for modifying database---------------------------------
-'''
+''' this was just a reference when working on code.
 class Equipment(models.Model):
     acquisition_date = models.DateField(blank = True, null = True)
     #service_tag = models.CharField(max_length = 35, blank = True, null = True)
     IS = models.CharField(max_length = 35, blank = True, unique = False, null = True)
-    machine_name = models.CharField(max_length = 100, unique = False, blank = True, null = True)
+    serial = models.CharField(max_length = 100, unique = False, blank = True, null = True)
     in_use = models.BooleanField()
     location = models.TextField(blank = True, null = True)
 '''
@@ -139,7 +139,8 @@ def Set_Computer(request):
 
     package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
-    package.machine_name = request.POST['machine_name']
+    package.serial = request.POST['serial']
+    package.model = request.POST['model']
     if request.POST['in_use'] == "false":
         package.in_use = False
     else:
@@ -162,7 +163,8 @@ def Set_Router(request):
 
     package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
-    package.machine_name = request.POST['machine_name']
+    package.serial = request.POST['serial']
+    package.model = request.POST['model']
     if request.POST['in_use'] == "false":
         package.in_use = False
     else:
@@ -185,7 +187,8 @@ def Set_Switch(request):
 
     package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
-    package.machine_name = request.POST['machine_name']
+    package.serial = request.POST['serial']
+    package.model = request.POST['model']
     if request.POST['in_use'] == "false":
         package.in_use = False
     else:
@@ -208,7 +211,8 @@ def Set_Firewall(request):
 
     package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
-    package.machine_name = request.POST['machine_name']
+    package.serial = request.POST['serial']
+    package.model = request.POST['model']
     if request.POST['in_use'] == "false":
         package.in_use = False
     else:
@@ -231,7 +235,8 @@ def Set_Server(request):
 
     package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
-    package.machine_name = request.POST['machine_name']
+    package.serial = request.POST['serial']
+    package.model = request.POST['model']
     if request.POST['in_use'] == "false":
         package.in_use = False
     else:
@@ -262,7 +267,7 @@ def Set_Hard_drive(request):
         Set_model(request.POST['model'], "HD")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'HD':
         return HttpResponse('Error, model type is not for a Hard Drive', status = 406)
@@ -280,7 +285,7 @@ def Set_Motherboard(request):
         Set_model(request.POST['model'], "MB")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'MB':
         return HttpResponse('Error, model type is not for Motherboards', status = 406)
@@ -299,7 +304,7 @@ def Set_Central_processing_unit(request):
         Set_model(request.POST['model'], "CP")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'CP':
         return HttpResponse('Error, model type is not for a CPU', status = 406)
@@ -318,7 +323,7 @@ def Set_Power_supply_unit(request):
         Set_model(request.POST['model'], "PS")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'PS':
         return HttpResponse('Error, model type is not for a Power Supply', status = 406)
@@ -337,7 +342,7 @@ def Set_Optical_drive(request):
         Set_model(request.POST['model'], "OD")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'OD':
         return HttpResponse('Error, model type is not for an Optical Drive', status = 406)
@@ -357,7 +362,7 @@ def Set_RAM(request):
         Set_model(request.POST['model'], "RM")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'RM':
         return HttpResponse('Error, model type is not for RAM', status = 406)
@@ -376,7 +381,7 @@ def Set_Operating_system(request):
         Set_model(request.POST['model'], "OS")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'OS':
         return HttpResponse('Invalid Operating System', status = 406)
@@ -396,7 +401,7 @@ def Set_Flash_memory(request):
         Set_model(request.POST['model'], "FM")
         package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
         
     if package.model.model_type != 'FM':
         return HttpResponse('Error, model type is not for Flash Memory', status = 406)
@@ -414,11 +419,11 @@ def Set_Service_contract(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 @csrf_exempt
-def Set_Expansion_card(request):
+def Set_Additional_features(request):
     package = models.Expansion_card()
     package.description = request.POST.description
         
-    package.location = models.Equipment.objects.get(machine_name=request.POST['location'])
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
     
     package.save()
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
@@ -427,8 +432,8 @@ def Set_Expansion_card(request):
 
 def Del_Equipment(request):
     temp = models.Equipment.objects.all()
-    if temp.filter(machine_name=request.POST['machine_name']).exists():
-        killme = models.Equipment.objects.filter(machine_name=request.POST['machine_name'])
+    if temp.filter(serial=request.POST['serial']).exists():
+        killme = models.Equipment.objects.filter(serial=request.POST['serial'])
         killme.delete()
         return HttpResponse("Entry Deleted", status=200)
     else:
@@ -470,9 +475,9 @@ def Set_Computer(request):
     except:
         package.IS = ""
     try:
-        package.machine_name = request.POST['machine_name']
+        package.serial = request.POST['serial']
     except:
-        package.machine_name = ""
+        package.serial = ""
     try:
         package.in_use = request.POST['in_use']
     except:
@@ -509,7 +514,7 @@ def Set_Hard_drive(request):
         package.location = models.Equipment.objects.get(id=post.location)
 --if it's an intiger, then treat it like a primary key
     elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(machine_name=post.location)
+        package.location = models.Equipment.objects.get(serial=post.location)
 --if its a string, treat it like a model number
     else:
         return HttpResponse('Error, Location Invalid', status = 406)
