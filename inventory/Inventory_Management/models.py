@@ -26,6 +26,7 @@ reiterated over and over in diffrent tables, so are set in there own tables to s
 '''
 
 #this object is used for the Modelnum table as the source for the choices in model_type field.
+#it is a simple python dictionary
 model_type = (
     ('HD','Hard_drive'),
     ('MB','Mother_board'),
@@ -35,6 +36,35 @@ model_type = (
     ('FT','Flash_type'),
     ('OD','Optical_drive'),
     )
+
+'''
+in Django, tables in a SQL database are defined as classes in python. as they are classes
+still, we can all the expected functionality of a class.
+
+class Modelnum(models.Model):
+-- make a class (table) called Modelnum and inherit from models.Model. all (tables) must inherit
+-- from this class or Django will not identify it as such
+    model_number = models.CharField(max_length = 25, unique = True)
+    -- make a FIELD in that TABLE called model_number, what we make it = to determins
+    -- what kind of data field it is, and the parameters we pass in define its spific attributes
+    -- https://docs.djangoproject.com/en/dev/ref/models/fields/
+    -- field reference on djangos webpage if you want to see what can all go in here
+    model_type = models.CharField(max_length = 20, choices = model_type)
+    
+    def __unicode__(self):
+        return unicode(self.model_number)
+    -- this function does one thing: makes the table have something return when viewd in the 
+    -- admin pannel to identify it. self.model_number just means reference yourself and the
+    -- variable model_number (its just a string)
+
+    def to_dict(self):
+        return {
+            'name': self.model_number,
+        }
+    -- this is the function that is looped in the views file, by giving it the same name for ALL
+    -- tables, it can be called in that loop, it returns a dictionary of what its contents are
+    --  in this case, just the model_number.
+'''
     
 class Modelnum(models.Model):
     model_number = models.CharField(max_length = 25, unique = True)
@@ -67,6 +97,59 @@ class Equipment(models.Model):
     model = models.CharField(max_length = 100, unique = False, blank = True, null = True)
     in_use = models.BooleanField()
     location = models.TextField(blank = True, null = True)
+
+'''
+just covering the one to_dict function here, as you can easily figure out the above with the quick
+explination given in the last note, its just a series of fields in a table.
+
+    def to_dict(self):
+        HD = self.hard_drive_set.all()
+        -- query the database and make HD a variable containing all instances of hard drives
+        HDD = [i.list_view() for i in HD]
+        -- quick for loop, that runs though all the enteries in HD and runs the to_dict functions
+        -- on them makeing a dictionary. this process is repeated for just about all componets
+        -- on the following lines.
+        MB = self.motherboard_set.all()
+        MBD = [i.list_view() for i in MB]
+        CP = self.central_processing_unit_set.all()
+        CPD = [i.list_view() for i in CP]
+        PS = self.power_supply_unit_set.all()
+        PSD = [i.list_view() for i in PS]
+        OD = self.optical_drive_set.all()
+        ODD = [i.list_view() for i in OD]
+        RM = self.ram_set.all()
+        RMD = [i.list_view() for i in RM]
+        OS = self.operating_system_set.all()
+        OSD = [i.list_view() for i in OS]
+        FM = self.flash_memory_set.all()
+        FMD = [i.list_view() for i in FM]
+        SC = self.service_contract_set.all()
+        SCD = [i.list_view() for i in SC]
+        EC = self.expansion_card_set.all()
+        ECD = [i.list_view() for i in EC]
+
+        return {
+        --the return is something intresting, as it is a dictionary which in it, has other 
+        -- dictionaries harddrive is pointed out as a comment in the first instance this happens
+        -- the machine fields are just returned outright as unicode string, the componets
+        -- are returning there keys with an assoiated dictionary that was made above
+            'id' : self.id,
+            'acquisition_date' : unicode(self.acquisition_date),
+            'IS' : unicode(self.IS),
+            'machine_name' : unicode(self.machine_name),
+            'in_use' : self.in_use,
+            'location' : unicode(self.location),
+            'Hard_drive' : HDD, #this is a line to look at for getting the list in the list
+            'Motherboard' : MBD,
+            'Central_processing_unit' : CPD,
+            'Power_supply_unit' : PSD,
+            'Optical_drive_set' : ODD,
+            'RAM' : RMD,
+            'Operating_system' : OSD,
+            'Flash_memory' : FMD,
+            'Service_contract' : SCD,
+            'Expansion_card' : ECD,
+'''
 
     def to_dict(self):
         HD = self.hard_drive_set.all()
@@ -347,6 +430,9 @@ class Additional_features(models.Model):
     def __unicode__(self):
         return unicode(self.description)
 
+#the above comments was a later attempt to explain the code, the lower an older go at it.
+#I left it in as it wasen't nessarly bad to leave, expecialy if it can help you understand
+#the hell is going on.
 '''
 breakdown of a database table:
 

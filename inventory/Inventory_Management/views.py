@@ -1,22 +1,38 @@
-#from django.contrib.auth.models import User, Group
-#from rest_framework import viewsets, generics#generics is here for if we need generics.ListAPIView
-#from Inventory_Management import serializers
-from django.http import HttpResponse
-from Inventory_Management import models
-from django.core import serializers
-import json
-import time
+#from django.contrib.auth.models import User, Group #this is typicaly default, wasented needed
+from django.http import HttpResponse #this is what is returned to the front end for sending data
+from Inventory_Management import models #this is the models file that defines our database
+#from django.core import serializers #was used once, now unused
+import json # contains the dumps function, which turns python dictionary to a readable json package
+import time # used in one function to in case its needed to auto-fill in time
 #for auth
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-from django.forms.models import model_to_dict
+#from django.views.decorators.http import require_http_methods #unused but left in case
+from django.forms.models import model_to_dict #unused, but comes as a default, used custom functions
 
 from django.utils import simplejson
 
-#-------------------most code here is unused/depreciated, scroll to near bottom for relevent code--------------------
 #----------------------------------------------------Start of code to read database-----------------------------------
-#line by line explination of the views are at the bottom of the document
+#line by line explination of the views are at first instance of them, as many are like. explinations
+#are set up as if you know nothing about python so may seems abit....condacending
 
+'''
+def VModelnum(request):
+--define a function with the name vModelnum, taking a parameter called request
+--request holds POST which is what was passed into our system via POST request
+
+    temp = models.Modelnum.objects.get(model_type=request.POST.model_type)
+    -- make a temp variable, and take an instance of modelnum from out of models, and call the
+    -- object objects.get (this is a query that just digs out all the enteries in the table 
+    -- modeltype WHERE the type is what was passed in)
+    dictt = [i.to_dict() for i in temp]
+    -- this is a quick for loop, take all the instances pulled from that query, (in temp) and call
+    -- the function to.dict (defined on the model file, details there) on all instances of 
+    -- the class (again, details in models) to make a dictionary list which can be..
+    data = json.dumps(dictt)
+    -- turned into a json package with the json.dumps function which we then..
+    return HttpResponse(data, status = 200)
+    -- return to the front end, with a status code confirming "ok" (yes, thats what it stands for)
+'''
 def VModelnum(request):
     temp = models.Modelnum.objects.get(model_type=request.POST.model_type)
     dictt = [i.to_dict() for i in temp]
@@ -119,16 +135,48 @@ def VExpansion_card(request):
     data = json.dumps(dictt)
     return HttpResponse(data, status = 200)
 #--------------------------------------Start of code for modifying database---------------------------------
-''' this was just a reference when working on code.
-class Equipment(models.Model):
-    acquisition_date = models.DateField(blank = True, null = True)
-    #service_tag = models.CharField(max_length = 35, blank = True, null = True)
-    IS = models.CharField(max_length = 35, blank = True, unique = False, null = True)
-    serial = models.CharField(max_length = 100, unique = False, blank = True, null = True)
-    in_use = models.BooleanField()
-    location = models.TextField(blank = True, null = True)
-'''
+
 #-------------------------------------machine sets-------------------------------------------------------
+'''
+@csrf_exempt
+-- this is called a decerator, all i know is that we need this one to modify the database
+-- its like a function that modifies the function (i think)
+def Set_Computer(request):
+-- make a function called Set_computer, taking in an variable called request
+    package = models.Computer()
+    -- take our model Computer, and make a blank instance of it
+    if request.POST['acquisition_date'] == "":
+    -- if the POST data has blank data...
+        package.acquisition_date = time.strftime('%Y-%m-%d')
+        -- set it to be the current time in a format that SQL will accept
+    else:
+        package.acquisition_date = request.POST['acquisition_date']
+        -- else, set the POST data passed in as the field
+
+    package.IS = request.POST['IS']
+    -- this like most of what follows, simply set what is passed into to our once blank entery
+    package.serial = request.POST['serial']
+    package.model = request.POST['model']
+    if request.POST['in_use'] == "false":
+        package.in_use = False
+    else:
+        package.in_use = True
+    -- this if else was nessary as the POST brings in a string, but the data base actualy
+    -- stores a boolean. so a little bit of logic was nessary
+            
+    package.location = request.POST['location']
+    try:
+        package.save()
+    -- try to save the model we just crafted to the database, if it throws an error...
+    except:
+        return HttpResponse("there was an error in the package", status=400)
+    -- return a string informing the front end there was an error with a generic error code 400
+    return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
+    -- when done, return what we made to the front end for validation (if they choose too) and
+    -- and error code specifying that the record was created
+
+'''
+
 @csrf_exempt
 def Set_Computer(request):
     package = models.Computer()
@@ -137,7 +185,6 @@ def Set_Computer(request):
     else:
         package.acquisition_date = request.POST['acquisition_date']
 
-    package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
     package.serial = request.POST['serial']
     package.model = request.POST['model']
@@ -161,7 +208,6 @@ def Set_Router(request):
     else:
         package.acquisition_date = request.POST['acquisition_date']
 
-    package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
     package.serial = request.POST['serial']
     package.model = request.POST['model']
@@ -185,7 +231,6 @@ def Set_Switch(request):
     else:
         package.acquisition_date = request.POST['acquisition_date']
 
-    package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
     package.serial = request.POST['serial']
     package.model = request.POST['model']
@@ -209,7 +254,6 @@ def Set_Firewall(request):
     else:
         package.acquisition_date = request.POST['acquisition_date']
 
-    package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
     package.serial = request.POST['serial']
     package.model = request.POST['model']
@@ -233,7 +277,6 @@ def Set_Server(request):
     else:
         package.acquisition_date = request.POST['acquisition_date']
 
-    package.acquisition_date = time.strftime('%Y-%m-%d')
     package.IS = request.POST['IS']
     package.serial = request.POST['serial']
     package.model = request.POST['model']
@@ -250,11 +293,49 @@ def Set_Server(request):
     return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
 
 #-------------------------------------------part sets-------------------------------------------------------
+# this function just makes a new model in the data base, it is called when something is added
+# to the database that dosen't exist, it adds it. was a requested feature
 def Set_model(num, model_type):
     temp=models.Modelnum()
     temp.model_number = num
     temp.model_type = model_type
     temp.save()
+
+'''
+@csrf_exempt
+-- this is called a decerator, all i know is that we need this one to modify the database
+-- its like a function that modifies the function (i think)
+def Set_Hard_drive(request):
+-- define a function called Set_Hard_drive, taking a variable called request which holds the POST data
+    package = models.Hard_drive()
+    -- make a blank instance of the hard drive model
+    package.total_GB = request.POST['total_GB']
+    -- this is the same for many of the following, but take our package, and set its field to be
+    -- what is in the passed in post data
+    temp = models.Modelnum.objects.all()
+    -- take a temp variable, and make it equal to every instance we have of models
+    if temp.filter(model_number=request.POST['model']).exists():
+    -- if what was passed in to our post exist inside the temp which holds all models...
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        -- then set in our package model to the instance in the modelnum table
+    else:
+        Set_model(request.POST['model'], "HD")
+        -- otherwise make it...
+        package.model = models.Modelnum.objects.get(model_number=request.POST['model'])
+        -- and then set the newly made instance to our package
+        
+    package.location = models.Equipment.objects.get(serial=request.POST['location'])
+
+    if package.model.model_type != 'HD':
+        return HttpResponse('Error, model type is not for a Hard Drive', status = 406)
+        -- if the model in the database is NOT what we are trying to set, inform user and
+        -- return an error. if a model was made, it was made for what called it, so no
+        -- confilct if one was made
+    
+    package.save()
+    return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
+    -- save the package and return whas was added and a record created status code
+'''
 
 @csrf_exempt
 def Set_Hard_drive(request):
@@ -439,91 +520,3 @@ def Del_Equipment(request):
     else:
         return HttpResponse("error locating record", status=304)
         
-'''------------------------------------Explination of code--------------------------------------------------
------calls to view database
-
-def VComputer(request):
---define function called VCompter, take in an instance of a HTML request
-    temp = models.Computer.objects.all()
---make a temp variable as querry of the computer object, and have it return all instances of it
-    dictt = [i.to_dict() for i in temp]
---if you look into the models file, there is a to_dict function for all tables(classes) this function
---takes a SINGLE instance of the class and turns it into a python dictionary, which is needed for 
---convertion to json pack which is what is sent to the front end.
-    data = json.dumps(dictt)
---we take that dictionary we made, and turn it into a json package. this is a default function from import json.
-    return HttpResponse(data, status = 200)
---return an instance of HttpResponce, which djano uses, with the json package and a status code
-
------calls to add machines
-
-@csrf_exempt
---this is a decorator that is required
-def Set_Computer(request):
-    package = models.Computer()
---make a new instance of computer
---the following try excepts are just a way of testing if a variable exist, as if it dosen't it will error
---we simply catch it and then do an assignment to a blank/relevent value for the field. if it does exist,
---we then let the inital direct assignment go on though.
-    try:
-        package.acquisition_date = request.POST['date']
-    except:
-        package.acquisition_date = time.strftime('%Y-%m-%d')
---the time.setftime is a formatted time string, that should be accepted by the database, its the current date
-    try:
-        package.IS = request.POST['IS']
-    except:
-        package.IS = ""
-    try:
-        package.serial = request.POST['serial']
-    except:
-        package.serial = ""
-    try:
-        package.in_use = request.POST['in_use']
-    except:
-        package.in_use = True
-    try:
-        package.location = request.POST['location']
-    except:
-        package.location = ""
-    try:
-        package.save()
-    except:
-        return HttpResponse("there was an error in the package", status=400)
---if there's a problem saving, the we return an error.
-    return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
-
------calls to add parts
-
-def Set_Hard_drive(request):
-    post = request.POST
---same as above, for convience
-    package = models.Hard_drive()
---same as above, sets a blank instance of the part
-    package.total_GB = post.total_GB
---"basic" fields are just given
-    temp = models.Modelnum.objects.all()
---for ease of front end use, we take an instance of all models in the database
-    if temp.filter(model_number=post.model_number).exist():
-        package.model = models.Modelnum.objects.get(model_number=post.model_number)
---we check if that model exist in our database
-    else:
-        Set_model(post.model, "HD")
---if it does not, we make one
-    if isinstance(post.location, int):
-        package.location = models.Equipment.objects.get(id=post.location)
---if it's an intiger, then treat it like a primary key
-    elif isinstance(post.location, str):
-        package.location = models.Equipment.objects.get(serial=post.location)
---if its a string, treat it like a model number
-    else:
-        return HttpResponse('Error, Location Invalid', status = 406)
---if its not either, return an error
-
-    if package.model.model_type != 'HD':
-        return HttpResponse('Error, model type is not for a Hard Drive', status = 406)
---check if its the right type of model, so we don't get drives labled as motherbored.
-    package.save()
---save it to the database.
-    return HttpResponse(simplejson.dumps(package.to_dict()), status=201)
-'''

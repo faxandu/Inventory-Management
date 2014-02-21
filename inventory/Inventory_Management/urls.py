@@ -1,9 +1,12 @@
 from django.conf.urls import patterns, url, include
 #from rest_framework import routers
 
-
+#importing the views file so we can call functions from it
 from Inventory_Management import views
 
+#what regex expressions are hit for a view, views.functionname specifies the view file, and which
+#function to call. convention i used was: all for viewing all enteries in its topic,
+#set for adding to the database, del for removing.
 urlpatterns = patterns('',
        url(r'^all/Modelnum', views.VModelnum),
        url(r'^all/Equipment', views.VEquipment),
